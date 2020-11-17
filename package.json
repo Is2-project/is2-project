@@ -1,0 +1,25 @@
+{
+  "name": "is2-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Is2-project/is2-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Is2-project/is2-project/issues"
+  },
+  "homepage": "https://github.com/Is2-project/is2-project#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
