@@ -61,6 +61,42 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+    post:
+      summary: Create a book
+      description: >-
+        Create a new book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - isbn
+                - title
+                - author
+                - year
+                - genre
+              properties:
+                isbn:
+                  type: string
+                  description: "Isbn of the new book"
+                title:
+                  type: string
+                  description: "Title of the new book"
+                author: 
+                  type: string
+                  description: "Author of the new book"
+                year:
+                  type: integer
+                  description: "Year of the new book"
+                genre:
+                  type: string
+                  description: "Genre of the new book"
+      responses:
+        '200':
+          description: 'The book was succesfully created'
+        '400':
+          $ref: '#/components/responses/error-400'
   /books/{isbn}:
     get:
       description: >-
@@ -125,7 +161,7 @@ components:
       properties:
         isbn:
           type: string
-          description: 'ISBN of the book'
+          description: 'Isbn of the book'
         title:
           type: string
           description: 'Title of the book'
