@@ -75,24 +75,55 @@ paths:
           description: 'isbn of the book'
       responses:
         '200':
-          description: 'The book description if exits, else nothing'
+          description: 'The book description'
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Book'
+        '404':
+          $ref: '#/components/responses/error-404'
+  /users:
+    post:
+      summary: Create a user
+      description: >-
+        Create a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+                - name
+                - surname
+              properties:
+                email:
+                  type: string
+                  description: "New user's email address"
+                password:
+                  type: string
+                  description: "New user's password"
+                name: 
+                  type: string
+                  description: "New user's first name"
+                surname:
+                  type: string
+                  description: "New user's family name"
+                phone:
+                  type: string
+                  description: "New user's phone number"
+      responses:
+        '200':
+          description: 'The user was succesfully created'
+        '400':
+          $ref: '#/components/responses/error-400'
 components:
   schemas:
     Book:
       type: object
-      required:
-        - ISBN
-        - title
-        - author
-        - year
-        - genre
-        - rating
       properties:
-        ISBN:
+        isbn:
           type: string
           description: 'ISBN of the book'
         title:
@@ -109,4 +140,23 @@ components:
           description: 'Genre of the book'
         rating:
           type: integer
-          description: 'Rating of the book (0 - 5Filtro )'
+          description: 'Rating of the book (0 - 5)'
+  responses:
+      error-400:
+        description: Invalid request
+        content:
+          application/json:
+            schema:
+              type: object 
+              properties:
+                message:
+                  type: string
+      error-404:
+        description: Not found
+        content:
+          application/json:
+            schema:
+              type: object 
+              properties:
+                message:
+                  type: string
