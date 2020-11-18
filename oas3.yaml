@@ -248,6 +248,31 @@ paths:
           $ref: '#/components/responses/error-401'
         '404':
           $ref: '#/components/responses/error-404'
+  /api/login:
+    post:
+      summary: Login endpoint
+      description: "Logs a user in with email & password"  #in the future this endpoint will provide an authentication token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+               - email
+               - password
+              properties:
+                email:
+                  type: string
+                  description: "User's email address"
+                password:
+                  type: string
+                  description: "User's personal password"
+      responses:
+        '200':
+          description: "Login was successful"
+          #in the future this endpoint will provide an authentication token
+        '400':
+          $ref: "#/components/responses/error-400"
 components:
   schemas:
     Book:
