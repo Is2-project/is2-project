@@ -16,6 +16,42 @@ paths:
       description: >-
         Gets a detailed list of all Books.
       summary: View all books
+      parameters:
+        - name: title
+          in: query
+          description: Title (or part of it) of the books you are searching for
+          schema:
+            type: string
+        - name: author
+          in: query
+          description: Author name (or part of it) of the books you are searching for
+          schema:
+            type: string
+        - name: genre
+          in: query
+          description: Genre name (or part of it) of the books you are searching for
+          schema:
+            type: string
+        - name: from_year
+          in: query
+          description: Year from which you want to get results
+          schema:
+            type: int
+        - name: to_year
+          in: query
+          description: Year to which you want to get results
+          schema:
+            type: int
+        - name: from_rating
+          in: query
+          description: Rating from which you want to get results
+          schema:
+            type: int
+        - name: to_rating
+          in: query
+          description: Rating to which you want to get results
+          schema:
+            type: int
       responses:
         '200':
           description: 'Detailed collection of books'
@@ -54,7 +90,7 @@ components:
         - author
         - year
         - genre
-        - mark
+        - rating
       properties:
         ISBN:
           type: string
@@ -71,6 +107,6 @@ components:
         genre:
           type: string
           description: 'Genre of the book'
-        mark:
+        rating:
           type: integer
-          description: 'Mark of the book'
+          description: 'Rating of the book (0 - 5Filtro )'
