@@ -25,18 +25,18 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-  /books/{ISBN}:
+  /books/{isbn}:
     get:
       description: >-
-        Gets information about a specific book, identified by the title
+        Gets information about a specific book, identified by the isbn
       summary: Get a book
       parameters:
         - in: path
-          name: title
+          name: isbn
           schema:
             type: string
           required: true
-          description: 'title of the book u are searching for'
+          description: 'isbn of the book'
       responses:
         '200':
           description: 'The book description if exits, else nothing'
