@@ -93,8 +93,13 @@ paths:
                   type: string
                   description: "Genre of the new book"
       responses:
-        '200':
-          description: 'The book was succesfully created'
+        '201':
+          description: 'Book created. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created book.
         '400':
           $ref: '#/components/responses/error-400'
   /books/{isbn}:
@@ -150,15 +155,107 @@ paths:
                   type: string
                   description: "New user's phone number"
       responses:
-        '200':
-          description: 'The user was succesfully created'
+        '201':
+          description: 'User created succesfully. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created user.
         '400':
           $ref: '#/components/responses/error-400'
+  /users/{id}:
+    get:
+      summary: "Info about a user"
+      description: >-
+        Detailed info about the user
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the user'
+      responses:
+        '200':
+          description: 'The user description'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  self:
+                    type: string
+                    description: "Link to this object"
+                  id:
+                    type: string
+                    description: "Unique id of this user"
+                  name:
+                    type: string
+                    description: "User's first name"
+                  surname:
+                    type: string
+                    description: "User's family name"
+                  email:
+                    type: string
+                    description: "User's email address"
+                  phone:
+                    type: string
+                    description: "User's phone number"
+        '404':
+          $ref: '#/components/responses/error-404'
+    put:
+      summary: "Update user info"
+      description: >-
+        "Update some user's info"
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the user'
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+                  description: "Updated user's password"
+                name: 
+                  type: string
+                  description: "Updated user's first name"
+                surname:
+                  type: string
+                  description: "Updated user's family name"
+                phone:
+                  type: string
+                  description: "Updated user's phone number"
+      responses:
+        '200':
+          description: 'User succesfully modified, no content'
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
 components:
   schemas:
     Book:
       type: object
       properties:
+        self:
+          type: string
+          description: 'Link to this object'
         isbn:
           type: string
           description: 'Isbn of the book'
@@ -187,6 +284,17 @@ components:
               properties:
                 message:
                   type: string
+                  description: Detailed description about the error
+      error-401:
+        description: Unauthorized
+        content:
+          application/json:
+            schema:
+              type: object 
+              properties:
+                message:
+                  type: string
+                  description: Detailed description about the error
       error-404:
         description: Not found
         content:
@@ -196,3 +304,4 @@ components:
               properties:
                 message:
                   type: string
+                  description: Detailed description about the error
