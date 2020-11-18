@@ -14,7 +14,7 @@ paths:
   /books:
     get:
       description: >-
-        Gets a detailed list of all books.
+        Gets a detailed list of all Books.
       summary: View all books
       responses:
         '200':
@@ -25,7 +25,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
-  /books/{title}:
+  /books/{ISBN}:
     get:
       description: >-
         Gets information about a specific book, identified by the title
