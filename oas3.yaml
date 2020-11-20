@@ -47,11 +47,6 @@ paths:
           description: Rating from which you want to get results
           schema:
             type: int
-        - name: to_rating
-          in: query
-          description: Rating to which you want to get results
-          schema:
-            type: int
       responses:
         '200':
           description: 'Detailed collection of books'
@@ -123,21 +118,24 @@ components:
     Book:
       type: object
       properties:
+        self:
+          type: string
+          description: 'Link to this object'
         isbn:
           type: string
-          description: 'ISBN of the book'
+          description: 'Isbn of the book'
         title:
           type: string
           description: 'Title of the book'
         author:
           type: string
           description: 'Author of the book'
-        year: 
-          type: integer
-          description: 'Year of the first release'
         genre:
           type: string
           description: 'Genre of the book'
+        year: 
+          type: integer
+          description: 'Year of the first release'
         rating:
           type: integer
           description: 'Rating of the book (0 - 5)'
