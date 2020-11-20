@@ -11,7 +11,7 @@ servers:
   - url: http://localhost:8000/api/
     description: Localhost
 paths:
-  /books:
+  /api/books:
     get:
       description: >-
         Gets a detailed list of all Books.
@@ -102,7 +102,7 @@ paths:
               description: Link to the newly created book.
         '400':
           $ref: '#/components/responses/error-400'
-  /books/{isbn}:
+  /api/books/{isbn}:
     get:
       description: >-
         Gets information about a specific book, identified by the isbn
@@ -123,7 +123,7 @@ paths:
                 $ref: '#/components/schemas/Book'
         '404':
           $ref: '#/components/responses/error-404'
-  /users:
+  /api/users:
     post:
       summary: Create a user
       description: >-
@@ -164,7 +164,7 @@ paths:
               description: Link to the newly created user.
         '400':
           $ref: '#/components/responses/error-400'
-  /users/{id}:
+  /api/users/{id}:
     get:
       summary: "Info about a user"
       description: >-
