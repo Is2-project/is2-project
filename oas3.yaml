@@ -188,7 +188,7 @@ paths:
                     type: string
                     description: "Link to this object"
                   id:
-                    type: string
+                    type: integer
                     description: "Unique id of this user"
                   name:
                     type: string
@@ -212,7 +212,7 @@ paths:
         - in: path
           name: id
           schema:
-            type: string
+            type: integer
           required: true
           description: 'id of the user'
         - in: query
