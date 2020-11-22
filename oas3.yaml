@@ -248,7 +248,7 @@ paths:
           $ref: '#/components/responses/error-401'
         '404':
           $ref: '#/components/responses/error-404'
-  /login:
+  /api/login:
     post:
       summary: Login endpoint
       description: "Logs a user in with email & password"  #in the future this endpoint will provide an authentication token
@@ -273,6 +273,24 @@ paths:
           #in the future this endpoint will provide an authentication token
         '400':
           $ref: "#/components/responses/error-400"
+  /api/logout:
+    post:
+      summary: Logout endpoint
+      description: "Logs a (logged-in) user out"
+      parameters:
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+      responses:
+        '200':
+          description: "Logout was successful" #in the future this will unvalidate the authenticaion token
+        '400':
+          $ref: "#/components/responses/error-400"
+        '401':
+          $ref: "#/components/responses/error-401"
 components:
   schemas:
     Book:
