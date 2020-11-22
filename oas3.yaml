@@ -290,12 +290,12 @@ components:
         author:
           type: string
           description: 'Author of the book'
-        year: 
-          type: integer
-          description: 'Year of the first release'
         genre:
           type: string
           description: 'Genre of the book'
+        year: 
+          type: integer
+          description: 'Year of the first release'
         rating:
           type: integer
           description: 'Rating of the book (0 - 5)'
