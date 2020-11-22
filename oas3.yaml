@@ -61,6 +61,8 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Book'
+        '400':
+          $ref: '#/components/responses/error-400'
     post:
       summary: Create a book
       description: >-
@@ -123,6 +125,29 @@ paths:
                 $ref: '#/components/schemas/Book'
         '404':
           $ref: '#/components/responses/error-404'
+  /api/books/{isbn}/review:
+      get:
+        summary: "Get all review of a specific book"
+        description: >-
+          List of a books's reviews
+        parameters:
+          - in: path
+            name: isbn
+            schema:
+              type: string
+            required: true
+            description: 'isbn of the book'
+        responses:
+          '200':
+            description: 'Detailed collection of a book reviews'
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Review'
+          '404':
+            $ref: '#/components/responses/error-404'
   /api/users:
     post:
       summary: Create a user
@@ -291,6 +316,71 @@ paths:
           $ref: "#/components/responses/error-400"
         '401':
           $ref: "#/components/responses/error-401"
+  /api/review:
+    post:
+      summary: Create a Review
+      description: >-
+        Create a new review
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - description
+                - rating
+                - book
+                - user
+              properties:
+                id:
+                  type: string
+                  description: "New Review's id"
+                description:
+                  type: string
+                  description: "New Review's description"
+                rating:
+                  type: string
+                  description: "New Book rating"
+                book: 
+                  type: string
+                  description: "Book reference of the new review"
+                user:
+                  type: string
+                  description: "User id of the review owner"
+      responses:
+        '201':
+          description: 'Review created succesfully. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created review.
+        '400':
+          $ref: '#/components/responses/error-400'
+  /api/review/{id}:
+      get:
+        summary: "Info about a review"
+        description: >-
+          Detailed info about the review
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: string
+            required: true
+            description: 'id of the review'
+        responses:
+          '200':
+            description: 'Detailed info about the review'
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Review'
+          '404':
+            $ref: '#/components/responses/error-404'
 components:
   schemas:
     Book:
@@ -308,15 +398,36 @@ components:
         author:
           type: string
           description: 'Author of the book'
-        genre:
-          type: string
-          description: 'Genre of the book'
         year: 
           type: integer
           description: 'Year of the first release'
+        genre:
+          type: string
+          description: 'Genre of the book'
         rating:
           type: integer
           description: 'Rating of the book (0 - 5)'
+    Review:
+      type: object
+      properties:
+        self:
+          type: string
+          description: "Link to this object"
+        id:
+          type: string
+          description: "Review's id"
+        description:
+          type: string
+          description: "Review's description"
+        rating:
+          type: string
+          description: "Book rating"
+        book: 
+          type: string
+          description: "Book reference of the new review"
+        user:
+          type: string
+          description: "User id of the review owner"
   responses:
       error-400:
         description: Invalid request
