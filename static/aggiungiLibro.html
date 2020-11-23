@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>BooksReviews - Aggiunta libro</title>
+    <link rel="stylesheet" href="https://bootswatch.com/_vendor/bootstrap/dist/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 offset-md-2 col-md-8 col-sm-12">
+                <br><br><br><br>
+                <h1>Aggiungi libro</h1>
+                <hr class="black">
+                <form method="post" id="addBookForm">
+                    <div class="fieldset">
+                        <div class="form-group has-danger has-success">
+                            <label for="isbn" class="form-control-label">ISBN</label>
+                            <input class="form-control" type="text" name="isbn" id="isbn" onfocusout="checkISBN()">
+                            <div class="invalid-feedback" id="isbnError">ISBN non valido!</div>
+                            <div class="valid-feedback" id="isbnValid" >ISBN valido!</div>
+                        </div>
+                        <div class="form-group has-danger">
+                            <label for="title" class="form-control-label">Titolo</label>
+                            <input class="form-control" type="text" name="title" id="title" onfocusout="requiredItem('title', 1, 50)">
+                            <div class="invalid-feedback" id="titleError">Titolo non valido!</div>
+                        </div>
+                        <div class="form-group has-danger">
+                            <label for="autore" class="form-control-label">Autore</label>
+                            <input class="form-control" type="text" name="autore" id="author" onfocusout="requiredItem('author', 1, 35)">
+                            <div class="invalid-feedback" id="authorError">Autore non valido!</div>
+                        </div>
+                        <div class="form-group has-danger">
+                            <label for="year" class="form-control-label">Anno di pubblicazione</label>
+                            <input class="form-control" type="number" name="year" id="year" min="0" onfocusout="checkYear()">
+                            <div class="invalid-feedback" id="yearError">Anno non valido!</div>
+                        </div>
+                        <div class="form-group has-danger">
+                            <label for="genere" class="form-control-label">Genere</label>
+                              <select class="form-control" id="genre" onchange="requiredItem('genre', 1, 25)">
+                                <option value="" selected disabled hidden>Select an Option </option>
+                                <option value="Horror">Horror</option>
+                                <option value="Fantascienza">Fantascienza</option>
+                                <option value="Documentario">Documentario</option>
+                                <option value="Azione">Azione</option>
+                                <option value="Biografico">Biografico</option>
+                                <option value="Comico">Comico</option>
+                                <option value="Commedia">Commedia</option>
+                                <option value="Thriller">Thriller</option>
+                              </select>
+                              <div class="invalid-feedback" id="genreError">Genere non valido!</div>
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-success" type="button" onclick="formValidation()">Aggiungi</button>
+                            <a href="libri.html" class="btn btn-danger">Annulla</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="script-aggiungiLibro.js"></script>
+</html>
