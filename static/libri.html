@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>BooksReviews - Libri</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <style>
+        .myCell{
+            min-width: 150px;
+        }
+
+        .center {
+            width: fit-content;
+            float: none;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .paginationIcon {
+            line-height: 1.5;
+        }
+        .ask {
+          margin : left;
+          width: 90%;
+          padding: 10px;
+        }
+        .inyear{
+          padding: 10px;
+          margin-left: : 20px;
+        }
+        .dropbtn {
+          position: static;
+        }
+        .dropbar{
+          display: none;
+          padding-top: 5px;
+        }
+        .dropdown-content {
+          display: none;
+          position: absolute;
+          background-color: #222;
+          width: 50%;
+          overflow: auto;
+          box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+          z-index: 1;
+        }
+        .search{
+          margin:left;
+        }
+
+        .dropdown-content a {
+          color: rgb(220,220,220);
+          font-size: 18px;
+          padding: 12px 16px;
+          text-decoration: none;
+          display: inline-block;
+        }
+        .dropbar a:hover {color: rgb(255,255,255);}
+        .badge {display: none;}
+        .showBadge{ display: inline-block;}
+        .show {display: block;}
+    </style>
+
+</head>
+
+    <body>
+
+        <div class="container">
+
+            <br><br><br><br><br><br>
+
+            <div class="row">
+
+                <input class="ask" type="text" placeholder="Cerca" id="searchBar" onkeyup="filterBooks('title','')">
+                <button onclick="funFilter()" class="btn btn-success center">Filter</button>
+                <div id="myBtnContainer" class="dropbar">
+                    <button class="dropbtn btn btn-success" onclick="myfun(1)"> Genre</button>
+                  <div id="myDropdown1" class="dropdown-content">
+                    <a class="abc" href="#" onclick="filterBooks('genre','Genre')" >GENERE</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','Fanascienza')">FANTASCIENZA</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','documentario')">DOCUMENTARIO</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','azione')">AZIONE</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','biografico')">BIOGRAFICO</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','comico')">COMICO</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','commedia')">COMMEDIA</a>
+                    <a class="abc" href="#" onclick="filterBooks('genre','thriller')">THRILLER</a>
+                  </div>
+                  <button class="dropbtn btn btn-success" onclick="myfun(3)"> Author</button>
+                  <div id="myDropdown3" class="dropdown-content">
+                    <a class="abc" href="#" onclick="filterBooks('author','Cic')" >Ciccio</a>
+                    <a class="abc" href="#" onclick="filterBooks('author','autore 3')">autore 3</a>
+                    <a class="abc" href="#" onclick="filterBooks('author','turbojohnfat')">turbojohnfat</a>
+                    <a class="abc" href="#" onclick="filterBooks('author','turbocancer')">turbocancer</a>
+                    <a class="abc" href="#" onclick="filterBooks('author','lilslut')">lilslut</a>
+                    <a class="abc" href="#" onclick="filterBooks('author','lildog')">lildog</a>
+                  </div>
+                  <button class="dropbtn btn btn-success" onclick="myfun(2)"> years</button>
+                  <div id="myDropdown2" class="dropdown-content">
+                    <input type="text" class="inyear" placeholder="Da" id="fromYear">
+                    <input type="text" class="inyear" placeholder="A" id="toYear">
+                    <a class="btn btn-success search center" onclick="filterBooksForYears()"> Cerca</a>
+                  </div>
+                  <button class="dropbtn btn btn-success" onclick="myfun(4)" id="rating"> Rating</button>
+                  <div id="myDropdown4" class="dropdown-content">
+                    <a class="abc" href="#" onclick="filterBooks('from_rating','1')">1 star</a>
+                    <a class="abc" href="#" onclick="filterBooks('from_rating','2')">2 stars</a>
+                    <a class="abc" href="#" onclick="filterBooks('from_rating','3')">3 stars</a>
+                    <a class="abc" href="#" onclick="filterBooks('from_rating','4')">4 stars</a>
+                    <a class="abc" href="#" onclick="filterBooks('from_rating','5')">5 stars</a>
+                  </div>
+                </div>
+
+            </div>
+
+            <br><br>
+
+            <a class="badge badge-pill badge-danger" id="badge-title">
+                <span id="badgeText-title"></span> <i onclick="removeFilter('title')" class="fas fa-times-circle"></i></a>
+
+            <a class="badge badge-pill badge-danger" id="badge-genre">
+                <span id="badgeText-genre"></span> <i onclick="removeFilter('genre')" class="fas fa-times-circle"></i></a>
+
+            <a class="badge badge-pill badge-danger" id="badge-author">
+                <span id="badgeText-author"></span> <i onclick="removeFilter('author')" class="fas fa-times-circle"></i></a>
+
+            <a class="badge badge-pill badge-danger" id="badge-from_year">
+                <span id="badgeText-from_year"></span> <i onclick="removeFilter('from_year')" class="fas fa-times-circle"></i></a>
+
+            <a class="badge badge-pill badge-danger" id="badge-from_rating">
+                <span id="badgeText-from_rating"></span> <i onclick="removeFilter('from_rating')" class="fas fa-times-circle"></i></a>
+
+
+            <br><br>
+
+            <div class="row">
+                <div class="col-sm-12">
+
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="myCell"><button onclick="changeSorting(0)" class="btn btn-link">ISBN</button> <i id="span0"></i></th>
+                                    <th class="myCell"><button onclick="changeSorting(1)" class="btn btn-link">Titolo</button> <i id="span1"></i></th>
+                                    <th class="myCell"><button onclick="changeSorting(2)" class="btn btn-link">Autore</button> <i id="span2"></i></th>
+                                    <th class="myCell"><button onclick="changeSorting(3)" class="btn btn-link">Anno</button> <i id="span3"></i></th>
+                                    <th class="myCell"><button onclick="changeSorting(4)" class="btn btn-link">Genere</button> <i id="span4"></i></th>
+                                    <th class="myCell"><button onclick="changeSorting(5)" class="btn btn-link">Rating</button> <i id="span5"></i></th>
+                                </tr>
+                            </thead>
+                            <tbody id="tbody">
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-center">
+
+                        <div class="center fixed-bottom">
+                            <ul class="pagination pagination-lg" id="pagination" hidden>
+
+                            </ul>
+                        </div>
+
+                        <br>
+
+                        <a href="aggiungiLibro.php" class="btn btn-success center">Aggiungi libro</a>
+
+                    </div>
+
+                    <br><br><br><br><br>
+
+                </div>
+            </div>
+
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
