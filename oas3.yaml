@@ -68,7 +68,7 @@ paths:
       description: >-
         Create a new book
       parameters:
-        - in: query
+        - in: cookie
           name: email
           schema:
             type: string
@@ -168,7 +168,7 @@ paths:
             type: string
           required: true
           description: 'isbn of the book'
-        - in: query
+        - in: cookie
           name: email
           schema:
             type: string
@@ -293,7 +293,7 @@ paths:
             type: integer
           required: true
           description: 'id of the user'
-        - in: query
+        - in: cookie
           name: email
           schema:
             type: string
@@ -372,6 +372,12 @@ paths:
         '200':
           description: "Login was successful"
           #in the future this endpoint will provide an authentication token
+          headers:
+            Set-Cookie:
+              description: "Authentication token"
+              schema:
+                type: string
+                example: "email=foo@bar.com"
         '400':
           $ref: "#/components/responses/error-400"
   /api/logout:
@@ -379,7 +385,7 @@ paths:
       summary: Logout endpoint
       description: "Logs a (logged-in) user out"
       parameters:
-        - in: query
+        - in: cookie
           name: email
           schema:
             type: string
@@ -426,7 +432,7 @@ paths:
             type: integer
           required: true
           description: 'id of the review'
-        - in: query
+        - in: cookie
           name: email
           schema:
             type: string
@@ -450,7 +456,7 @@ paths:
             type: integer
           required: true
           description: 'id of the review'
-        - in: query
+        - in: cookie
           name: email
           schema:
             type: string
