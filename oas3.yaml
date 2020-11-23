@@ -273,6 +273,29 @@ paths:
           $ref: '#/components/responses/error-401'
         '404':
           $ref: '#/components/responses/error-404'
+  /api/users/{id}/reviews:
+      get:
+        summary: "Get all review of a specific user"
+        description: >-
+          All the reviews made by a user
+        parameters:
+          - in: path
+            name: id
+            schema:
+              type: integer
+            required: true
+            description: 'unique id of the user'
+        responses:
+          '200':
+            description: 'Detailed collection of all the reviews made by a user'
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Review'
+          '404':
+            $ref: '#/components/responses/error-404'
   /api/login:
     post:
       summary: Login endpoint
@@ -426,7 +449,7 @@ components:
           type: string
           description: "Book reference of the new review"
         user:
-          type: string
+          type: integer
           description: "User id of the review owner"
   responses:
       error-400:
