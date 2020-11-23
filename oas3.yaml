@@ -6,9 +6,9 @@ info:
   license:
     name: GNU General Public License 3.0
 servers:
-  - url: http://assignments-api.herokuapp.com.com/api/
+  - url: http://assignments-api.herokuapp.com.com
     description: Heroku
-  - url: http://localhost:8000/api/
+  - url: http://localhost:8000
     description: Localhost
 paths:
   /api/books:
@@ -134,29 +134,73 @@ paths:
                 $ref: '#/components/schemas/Book'
         '404':
           $ref: '#/components/responses/error-404'
-  /api/books/{isbn}/review:
-      get:
-        summary: "Get all review of a specific book"
-        description: >-
-          List of a books's reviews
-        parameters:
-          - in: path
-            name: isbn
+  /api/books/{isbn}/reviews:
+    get:
+      summary: "Get all review of a specific book"
+      description: >-
+        List of a books's reviews
+      parameters:
+        - in: path
+          name: isbn
+          schema:
+            type: string
+          required: true
+          description: 'isbn of the book'
+      responses:
+        '200':
+          description: 'Detailed collection of a book reviews'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+        '404':
+          $ref: '#/components/responses/error-404'
+    post:
+      summary: Create a Review
+      description: >-
+        Create a new review
+      parameters:
+        - in: path
+          name: isbn
+          schema:
+            type: string
+          required: true
+          description: 'isbn of the book'
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+      requestBody:
+        content:
+          application/json:
             schema:
-              type: string
-            required: true
-            description: 'isbn of the book'
-        responses:
-          '200':
-            description: 'Detailed collection of a book reviews'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Review'
-          '404':
-            $ref: '#/components/responses/error-404'
+              type: object
+              required:
+                - description
+                - rating
+              properties:
+                description:
+                  type: string
+                  description: "New Review's description"
+                rating:
+                  type: integer
+                  description: "New Book rating"
+      responses:
+        '201':
+          description: 'Review created succesfully. Link in the Location header'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created review.
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
   /api/users:
     post:
       summary: Create a user
@@ -207,7 +251,7 @@ paths:
         - in: path
           name: id
           schema:
-            type: string
+            type: integer
           required: true
           description: 'id of the user'
       responses:
@@ -348,12 +392,64 @@ paths:
           $ref: "#/components/responses/error-400"
         '401':
           $ref: "#/components/responses/error-401"
-  /api/reviews:
-    post:
-      summary: Create a Review
+  /api/reviews/{id}:
+    get:
+      summary: "Info about a review"
       description: >-
-        Create a new review
+        Detailed info about the review
       parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Detailed info about the review'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+        '404':
+          $ref: '#/components/responses/error-404'
+    delete:
+      summary: "Delete a review"
+      description: >-
+        Delete a review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'id of the review'
+        - in: query
+          name: email
+          schema:
+            type: string
+          required: true
+          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+      responses:
+        '200':
+          description: 'Review was correctly deleted'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+    put:
+      summary: "Update a review"
+      description: >-
+        Update a review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: 'id of the review'
         - in: query
           name: email
           schema:
@@ -366,59 +462,22 @@ paths:
             schema:
               type: object
               required:
-                - id
                 - description
                 - rating
-                - book
-                - user
               properties:
-                id:
-                  type: integer
-                  description: "New Review's id"
                 description:
                   type: string
                   description: "New Review's description"
                 rating:
                   type: integer
                   description: "New Book rating"
-                book: 
-                  type: string
-                  description: "Isbn of the book"
       responses:
-        '201':
-          description: 'Review created succesfully. Link in the Location header'
-          headers:
-            'Location':
-              schema:
-                type: string
-              description: Link to the newly created review.
-        '400':
-          $ref: '#/components/responses/error-400'
+        '200':
+          description: 'Review was correctly updated'
         '401':
           $ref: '#/components/responses/error-401'
-  /api/reviews/{id}:
-      get:
-        summary: "Info about a review"
-        description: >-
-          Detailed info about the review
-        parameters:
-          - in: path
-            name: id
-            schema:
-              type: integer
-            required: true
-            description: 'id of the review'
-        responses:
-          '200':
-            description: 'Detailed info about the review'
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Review'
-          '404':
-            $ref: '#/components/responses/error-404'
+        '404':
+          $ref: '#/components/responses/error-404'
 components:
   schemas:
     Book:
