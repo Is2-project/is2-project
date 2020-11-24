@@ -89,7 +89,7 @@ function onSub() {      //function use when we submit the form
   .catch( error => console.log(error) );
 
 
-  window.location.href = "libri.html";    //redirect on the main page
+  window.location.href = "/";    //redirect on the main page
   alert("Hai aggiunto un nuovo libro!");
 }
 

@@ -1,0 +1,62 @@
+<nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <a class="navbar-brand" href="/">BooksReviews</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+          <!-- <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Link</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+            <div class="dropdown-menu" aria-labelledby="dropdown01">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+          </li> -->
+        </ul>
+
+
+        <div>
+            <script type="text/javascript">
+                function getCookie(cname) {
+                  var name = cname + "=";
+                  var decodedCookie = decodeURIComponent(document.cookie);
+                  var ca = decodedCookie.split(';');
+                  for(var i = 0; i <ca.length; i++) {
+                    var c = ca[i];
+                    while (c.charAt(0) == ' ') {
+                      c = c.substring(1);
+                    }
+                    if (c.indexOf(name) == 0) {
+                      return c.substring(name.length, c.length);
+                    }
+                  }
+                  return "";
+                }
+
+                if (getCookie('email') == ""){
+                    //no cookie
+                    html = "<a class='btn btn-outline-success my-2 my-sm-0' href='/signup' role='button'>Registrati</a>\
+                    <a class='btn btn-outline-success my-2 my-sm-0' href='/signin' role='button'>Accedi</a>";
+                    document.write(html);
+                } else {
+                    //have cookie
+                    html = "<a class='btn btn-outline-success my-2 my-sm-0' href='/user' role='button'>" + getCookie('email') + "</a>";
+                    document.write(html);
+                }
+
+            </script>
+        </div>
+
+      </div>
+    </nav>
