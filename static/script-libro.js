@@ -1,16 +1,40 @@
 var titleBook = '';
+var nickName = '';
 
+function loadUser(data) {
+  var text = '';
+  if(data[0]!==undefined) {
+    nickName=data[0].name+' '+data[0].surname;
+  }
+  else {
+    nickName='ERROR';
+  }
+}
 function loadReviews(data) {
   const ul = document.getElementById('tbody');
   var txt = '';
-  for(let rew of data) {
-    txt+= '<tr>';
-    txt+= '<td>'+rew.user+'</td>';
-    txt+= '<td>'+rew.rating+'</td>';
-    txt+= '<td>'+rew.description+'</td>';
-    txt+= '</tr>';
+  if(data[0] !== undefined) {
+    for(let rew of data) {
+      //httpGetUser(rew.user);
+      txt+= '<tr>';
+      txt+= '<td>'+rew.user+'</td>';
+      txt+= '<td>';
+      for(var i=0;i<rew.rating;i++) {
+        txt+= '<i class="fas fa-star"></i>' //stampo le stelline
+      }
+      txt+='</td>';
+      txt+= '<td>'+rew.description+'</td>';
+      txt+= '</tr>';
+    }
+  //  for($i=0; $i<(int)$row['voto']; $i++)   //stampo le stelline
+      //  echo '<i class="fas fa-star"></i>';
+     // text html that we insert
   }
-  ul.innerHTML = txt; // text html that we insert
+  else {
+    txt+='<tr colspan = 3>';
+    txt+= '<td>Non ci sono recensioni per questo libro!</td>';
+  }
+  ul.innerHTML = txt;
 }
 
 function loadBooks(data) {
@@ -27,6 +51,16 @@ function loadBooks(data) {
     ul.innerHTML = txt; // text html that we insert
 }
 
+function httpGetUser (user) {
+  console.log(user);            // commetto per vedere cosa chiedo
+    fetch('../api/users/' + user.toString())
+    .then((resp) => resp.json())
+    .then(function(data) {
+        loadUser(data);
+        return;
+    })
+    .catch( error => console.error(error) );
+}
 function httpGetBook (isbn) {
   console.log(isbn);            // commetto per vedere cosa chiedo
     fetch('../api/books/' + isbn.toString())
