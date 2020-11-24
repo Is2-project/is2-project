@@ -23,7 +23,7 @@ function loadReviews(data) {
       txt+= '<td name= td'+rew.user+'>'+rew.user+'</td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
       txt+= '<td>';
       for(var i=0;i<rew.rating;i++) {
-        txt+= '<i class="fas fa-star"></i>' //stampo le stelline
+        txt+= '<i class="fas fa-star"></i>'; //stampo le stelline
       }
       txt+='</td>';
       txt+= '<td>'+rew.description+'</td>';
@@ -41,11 +41,15 @@ function loadBooks(data) {
     const ul = document.getElementById('book');
     var txt = '';
     txt+= '<h1>'+data.title+'</h1>'; titleBook=data.title; //titol of the page
-    txt+= '<h6> Author: '+data.author+'</h3>';
-    txt+= '<h6> Genre: '+data.genre+'</h3>';
-    txt+= '<h6> Year: '+data.year+'</h3>';
-    txt+= '<h6> Rating: '+data.rating+'</h3>';
-    txt+= '<h6> Isbn: '+data.isbn+'</h3>';
+    txt+= '<h6> Author: '+data.author+'</h6>';
+    txt+= '<h6> Genre: '+data.genre+'</h6>';
+    txt+= '<h6> Year: '+data.year+'</h6>';
+    txt+= '<h6> Rating: ';
+    for(var i=0;i<data.rating;i++) {
+      txt+= '<i class="fas fa-star"></i>'; //stampo le stelline
+    }
+    txt+='</h6>';
+    txt+= '<h6> Isbn: '+data.isbn+'</h6>';
     ul.innerHTML = txt; // text html that we insert
 }
 
@@ -85,7 +89,7 @@ function buildPage () { // fun that biuld page
   const queryString = window.location.search;     //take isbn from url
   const urlParams = new URLSearchParams(queryString);
   const isbn = urlParams.get('isbn');
-  document.getElementById("addReview").href = "aggiungiRecensione?"+isbn;
+  document.getElementById("addReview").href = "aggiungiRecensione?isbn="+isbn;
   httpGetBook(isbn);
   httpGetReviews(isbn);
 

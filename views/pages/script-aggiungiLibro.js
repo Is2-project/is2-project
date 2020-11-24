@@ -103,7 +103,3 @@ function formValidation () {  //function to validate the form
           onSub();
     }
 }
-
-function checkLogged(){
-  window.location.href = "/signin";
-}
