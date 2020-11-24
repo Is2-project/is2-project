@@ -85,7 +85,7 @@ function buildPage () { // fun that biuld page
   const queryString = window.location.search;     //take isbn from url
   const urlParams = new URLSearchParams(queryString);
   const isbn = urlParams.get('isbn');
-  document.getElementById("addReview").href = "aggiungiRecensione.html?"+isbn;
+  document.getElementById("addReview").href = "aggiungiRecensione?"+isbn;
   httpGetBook(isbn);
   httpGetReviews(isbn);
 
