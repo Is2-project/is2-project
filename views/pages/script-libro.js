@@ -1,4 +1,4 @@
-
+var titleBook;
 
 function loadUser(data) {         //load name user on the reviews
   var nickName = '';
@@ -40,7 +40,7 @@ function loadReviews(data) {
 function loadBooks(data) {
     const ul = document.getElementById('book');
     var txt = '';
-    txt+= '<h1>'+data.title+'</h1>';
+    txt+= '<h1>'+data.title+'</h1>'; titleBook=data.title; //titol of the page
     txt+= '<h6> Author: '+data.author+'</h3>';
     txt+= '<h6> Genre: '+data.genre+'</h3>';
     txt+= '<h6> Year: '+data.year+'</h3>';
