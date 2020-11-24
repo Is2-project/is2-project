@@ -218,7 +218,7 @@ function loadBooks(data) {
     var txt = '';
     for(let lib of data) {
       txt+= '<tr>';
-      txt+= '<td><a href="libro.html/?isbn='+lib.isbn+'">'+lib.isbn+'</a></td>';
+      txt+= '<td><a href="libro.html?isbn='+lib.isbn+'">'+lib.isbn+'</a></td>';
       txt+= '<td>'+lib.title+'</td>';
       txt+= '<td>'+lib.author+'</td>';
       txt+= '<td>'+lib.genre+'</td>';
