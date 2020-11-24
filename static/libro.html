@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>BooksReviews - <script>titleBook</script></title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://bootswatch.com/_vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <style>
+        .myCell{
+            min-width: 150px;
+        }
+        .fieldBooks {
+
+        }
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+  <div id="book">
+  </div>
+
+  <!--  <br><br><br><br><br><br>-->
+
+    <div class="row">
+        <div class="col-sm-12" id="book">
+            <br>
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th class="myCell">Utente</th>
+                    <th class="myCell">Voto</th>
+                    <th class="myCell">Recensione</th>
+                </tr>
+                </thead>
+                <tbody id="tbody">
+                <!--<?php
+
+                    $ris = $conn->query("SELECT nome, cognome, voto, descrizione, data, u.id FROM recensioni r JOIN users u ON r.id_utente = u.id WHERE isbn=".$isbn);
+
+                    if($ris->num_rows == 0)
+                        echo "<td colspan='3'>Nessuna recensione per questo libro</td>";
+                    else {
+                        while ($row = $ris->fetch_array(MYSQLI_ASSOC)){
+                            echo "<tr class='".( ($row['id'] == $utente)? "table-active" : "" )."'>";
+                            echo "<td>".$row['nome']." ".$row['cognome']."</td>";
+                            echo "<td>".$row['data']."</td>";
+                            echo "<td>";
+                            for($i=0; $i<(int)$row['voto']; $i++)   //stampo le stelline
+                                echo '<i class="fas fa-star"></i>';
+                            echo "</td>";
+                            echo "<td>".$row['descrizione']."</td>";
+                            echo "</tr>";
+                        }
+                    }
+
+                ?>-->
+              </tbody>
+            </table>
+
+            <br><br>
+<!--
+            <?php
+
+                $ris = $conn->query("SELECT * FROM recensioni WHERE id_utente=".$_SESSION['id_utente']." AND isbn=".$isbn);
+
+                if($ris->num_rows == 0)
+                    $recensito = false;
+                else
+                    $recensito = true;
+
+
+            ?>
+-->
+
+            <a href="aggiungiRecensione.php?isbn=<?php echo $isbn; ?>&action=<?php echo ($recensito)? "edit" : "add"; ?>" class="btn btn-success"><?php echo ($recensito)? "Modifica" : "Aggiungi"; ?> recensione</a>
+            <?php if($recensito) { ?> <a href="eliminaRecensione.php?isbn=<?php echo $isbn; ?>" class="btn btn-danger">Elimina recensione</a> <?php } ?>
+
+            <br><br><br><br><br>
+
+        </div>
+    </div>
+
+</div>
+<script src="script-libro.js"></script>
+</body>
+
+</html>
