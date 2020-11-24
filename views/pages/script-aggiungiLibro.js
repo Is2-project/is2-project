@@ -83,14 +83,18 @@ function onSub() {      //function use when we submit the form
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify( obj ),
   })
-  .then((resp) => { // nothing to do on the response
+  .then((resp) => {
+      if(resp.status == 401) {        //check if the user is logged, if not redirect to login page
+        window.location.href = "/signin";
+        alert("Devi accerede con un account prima di inserire un libro");
+      }
+      else if(resp.status == 201){
+        window.location.href = "/";
+        alert("Hai aggiunto un nuovo libro!");
+      }
       return;
   })
-  .catch( error => console.log(error) );
-
-
-  window.location.href = "/";    //redirect on the main page
-  alert("Hai aggiunto un nuovo libro!");
+  .catch( error => {console.error(error); });
 }
 
 function formValidation () {  //function to validate the form
@@ -98,4 +102,8 @@ function formValidation () {  //function to validate the form
     if(requiredItem("isbn", 10, 13) && flag && requiredItem("title", 1, 50) && requiredItem("author", 1, 35) && checkYear() && requiredItem("genre", 1, 25)) {//&& requiredItem("title", 0, 120) && requiredItem("author", 0, 80) && requiredItem("genre", 0, 60) && checkYear("year"))
           onSub();
     }
+}
+
+function checkLogged(){
+  window.location.href = "/signin";
 }
