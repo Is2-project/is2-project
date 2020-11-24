@@ -41,28 +41,7 @@
                 </tr>
                 </thead>
                 <tbody id="tbody">
-                <!--<?php
-
-                    $ris = $conn->query("SELECT nome, cognome, voto, descrizione, data, u.id FROM recensioni r JOIN users u ON r.id_utente = u.id WHERE isbn=".$isbn);
-
-                    if($ris->num_rows == 0)
-                        echo "<td colspan='3'>Nessuna recensione per questo libro</td>";
-                    else {
-                        while ($row = $ris->fetch_array(MYSQLI_ASSOC)){
-                            echo "<tr class='".( ($row['id'] == $utente)? "table-active" : "" )."'>";
-                            echo "<td>".$row['nome']." ".$row['cognome']."</td>";
-                            echo "<td>".$row['data']."</td>";
-                            echo "<td>";
-                            for($i=0; $i<(int)$row['voto']; $i++)   //stampo le stelline
-                                echo '<i class="fas fa-star"></i>';
-                            echo "</td>";
-                            echo "<td>".$row['descrizione']."</td>";
-                            echo "</tr>";
-                        }
-                    }
-
-                ?>-->
-              </tbody>
+               </tbody>
             </table>
 
             <br><br>
@@ -80,8 +59,8 @@
             ?>
 -->
 
-            <a href="aggiungiRecensione.php?isbn=<?php echo $isbn; ?>&action=<?php echo ($recensito)? "edit" : "add"; ?>" class="btn btn-success"><?php echo ($recensito)? "Modifica" : "Aggiungi"; ?> recensione</a>
-            <?php if($recensito) { ?> <a href="eliminaRecensione.php?isbn=<?php echo $isbn; ?>" class="btn btn-danger">Elimina recensione</a> <?php } ?>
+            <a id="addReview" class="btn btn-success">Aggiungi recensione</a>
+            <!--<a href="eliminaRecensione.php?isbn=<?php echo $isbn; ?>" class="btn btn-danger">Elimina recensione</a> <?php } ?>-->
 
             <br><br><br><br><br>
 
