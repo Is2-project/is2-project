@@ -33,3 +33,26 @@ function register(email, password, nome, cognome, telefono) {
         alert('Errore: ' + JSON.parse(response.responseText).error);
     });
 }
+
+function updateInfo(email, password, nome, cognome, telefono) {
+    console.log(email);
+    console.log(password);
+    console.log(nome);
+    console.log(cognome);
+    console.log(telefono);
+
+
+    $.ajax({
+      url: '/api/users/' + email,
+      type: 'PUT',
+      data: {
+         password: password,
+         name: nome,
+         surname: cognome,
+         phone: telefono
+      },
+      success: function(data) {
+        alert('Load was performed.');
+      }
+    });
+}
