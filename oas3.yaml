@@ -64,16 +64,11 @@ paths:
         '400':
           $ref: '#/components/responses/error-400'
     post:
+      security:
+        - bearerAuth: []
       summary: Create a book
       description: >-
         Create a new book
-      parameters:
-        - in: cookie
-          name: email
-          schema:
-            type: string
-          required: true
-          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
       requestBody:
         content:
           application/json:
@@ -158,6 +153,8 @@ paths:
         '404':
           $ref: '#/components/responses/error-404'
     post:
+      security:
+        - bearerAuth: []
       summary: Create a Review
       description: >-
         Create a new review
@@ -168,12 +165,6 @@ paths:
             type: string
           required: true
           description: 'isbn of the book'
-        - in: cookie
-          name: email
-          schema:
-            type: string
-          required: true
-          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
       requestBody:
         content:
           application/json:
@@ -251,7 +242,7 @@ paths:
         - in: path
           name: id
           schema:
-            type: integer
+            type: string
           required: true
           description: 'id of the user'
       responses:
@@ -266,7 +257,7 @@ paths:
                     type: string
                     description: "Link to this object"
                   id:
-                    type: integer
+                    type: string
                     description: "Unique id of this user"
                   name:
                     type: string
@@ -283,6 +274,8 @@ paths:
         '404':
           $ref: '#/components/responses/error-404'
     put:
+      security:
+        - bearerAuth: []
       summary: "Update user info"
       description: >-
         "Update some user's info"
@@ -290,15 +283,9 @@ paths:
         - in: path
           name: id
           schema:
-            type: integer
-          required: true
-          description: 'id of the user'
-        - in: cookie
-          name: email
-          schema:
             type: string
           required: true
-          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+          description: 'id of the user'
       requestBody:
         content:
           application/json:
@@ -335,7 +322,7 @@ paths:
           - in: path
             name: id
             schema:
-              type: integer
+              type: string
             required: true
             description: 'unique id of the user'
         responses:
@@ -371,33 +358,16 @@ paths:
       responses:
         '200':
           description: "Login was successful"
-          #in the future this endpoint will provide an authentication token
-          headers:
-            Set-Cookie:
-              description: "Authentication token"
+          content:
+            application/json:
               schema:
-                type: string
-                example: "email=foo@bar.com"
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: "The newly generated token"
         '400':
           $ref: "#/components/responses/error-400"
-  /api/logout:
-    post:
-      summary: Logout endpoint
-      description: "Logs a (logged-in) user out"
-      parameters:
-        - in: cookie
-          name: email
-          schema:
-            type: string
-          required: true
-          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
-      responses:
-        '200':
-          description: "Logout was successful" #in the future this will unvalidate the authenticaion token
-        '400':
-          $ref: "#/components/responses/error-400"
-        '401':
-          $ref: "#/components/responses/error-401"
   /api/reviews/{id}:
     get:
       summary: "Info about a review"
@@ -407,7 +377,7 @@ paths:
         - in: path
           name: id
           schema:
-            type: integer
+            type: string
           required: true
           description: 'id of the review'
       responses:
@@ -422,6 +392,8 @@ paths:
         '404':
           $ref: '#/components/responses/error-404'
     delete:
+      security:
+        - bearerAuth: []
       summary: "Delete a review"
       description: >-
         Delete a review
@@ -429,15 +401,9 @@ paths:
         - in: path
           name: id
           schema:
-            type: integer
-          required: true
-          description: 'id of the review'
-        - in: cookie
-          name: email
-          schema:
             type: string
           required: true
-          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+          description: 'id of the review'
       responses:
         '200':
           description: 'Review was correctly deleted'
@@ -446,6 +412,8 @@ paths:
         '404':
           $ref: '#/components/responses/error-404'
     put:
+      security:
+        - bearerAuth: []
       summary: "Update a review"
       description: >-
         Update a review
@@ -453,15 +421,9 @@ paths:
         - in: path
           name: id
           schema:
-            type: integer
-          required: true
-          description: 'id of the review'
-        - in: cookie
-          name: email
-          schema:
             type: string
           required: true
-          description: "Email of the authenticated user" #this will be substituted by the authentication cookie or token that we will be using
+          description: 'id of the review'
       requestBody:
         content:
           application/json:
@@ -485,6 +447,11 @@ paths:
         '404':
           $ref: '#/components/responses/error-404'
 components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
   schemas:
     Book:
       type: object
@@ -510,6 +477,9 @@ components:
         rating:
           type: integer
           description: 'Rating of the book (0 - 5)'
+        user:
+          type: string
+          description: 'User that created this book'
     Review:
       type: object
       properties:
@@ -517,7 +487,7 @@ components:
           type: string
           description: "Link to this object"
         id:
-          type: integer
+          type: string
           description: "Review's id"
         description:
           type: string
@@ -529,7 +499,7 @@ components:
           type: string
           description: "Book reference of the new review"
         user:
-          type: integer
+          type: string
           description: "User id of the review owner"
   responses:
       error-400:
