@@ -35,5 +35,8 @@
   "jest": {
     "verbose": true,
     "collectCoverage": true
+  },
+  "engines": {
+    "node": "15.x"
   }
 }
