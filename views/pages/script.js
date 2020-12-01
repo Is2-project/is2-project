@@ -218,13 +218,21 @@ function loadBooks(data) {
     var txt = '';
     for(let lib of data) {
       txt+= '<tr>';
-      txt+= '<td><a href="libro.html?isbn='+lib.isbn+'">'+lib.isbn+'</a></td>';
+      txt+= '<td><a href="libro?isbn='+lib.isbn+'">'+lib.isbn+'</a></td>';
       txt+= '<td>'+lib.title+'</td>';
       txt+= '<td>'+lib.author+'</td>';
       txt+= '<td>'+lib.genre+'</td>';
       txt+= '<td>'+lib.year+'</td>';
-      txt+= '<td>'+lib.rating+'</td>';
+      txt+= '<td>';
+      if(lib.rating == null){
+        txt+="Nessuna recensione disponibile";
+      } else {
+      for(var i=0;i<lib.rating;i++) {
+        txt+= '<i class="fas fa-star"></i>'; //stampo le stelline
+      }
+      txt+='</td>';
       txt+= '</tr>';
+      }
     }
     ul.innerHTML = txt; // text html that we insert
 }
