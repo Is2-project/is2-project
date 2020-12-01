@@ -1,4 +1,5 @@
 function requiredItem (str, minLength, maxLength ) {
+    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     val = document.getElementById(str);
     if(val.value === "") {// check is value is empty, if yes return false and set the class visible effect to the html
         document.getElementById(str+"Error").innerHTML = "Campo obbligatorio!";
@@ -20,6 +21,12 @@ function requiredItem (str, minLength, maxLength ) {
               val.classList.toggle("is-invalid");
             val.classList.remove("is-valid");
             return false;
+        } else if(format.test(val.value)){
+          document.getElementById(str+"Error").innerHTML ="il campo non puó contenere caratteri speciali!";
+          if(!val.classList.contains("is-invalid"))
+            val.classList.toggle("is-invalid");
+          val.classList.remove("is-valid");
+          return false;
         } else {  // if it all good we can valid the field
           if(!val.classList.contains("is-valid"))
             val.classList.toggle("is-valid");

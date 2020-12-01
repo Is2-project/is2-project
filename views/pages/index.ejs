@@ -22,7 +22,7 @@
                 <input class="ask" type="text" placeholder="Cerca" id="searchBar" onkeyup="filterBooks('title','')">
                 <button onclick="funFilter()" class="btn btn-success center">Filter</button>
                 <div id="myBtnContainer" class="dropbar">
-                    <button class="dropbtn btn btn-success" onclick="myfun(1)"> Genre</button>
+                    <button class="dropbtn btn btn-success" onclick="dropDownFun(1)"> Genre</button>
                   <div id="myDropdown1" class="dropdown-content">
                     <a class="abc" href="#" onclick="filterBooks('genre','HORROR')" >HORROR</a>
                     <a class="abc" href="#" onclick="filterBooks('genre','FANTASCIENZA')">FANTASCIENZA</a>
@@ -33,9 +33,11 @@
                     <a class="abc" href="#" onclick="filterBooks('genre','COMMEDIA')">COMMEDIA</a>
                     <a class="abc" href="#" onclick="filterBooks('genre','THRILLER')">THRILLER</a>
                   </div>
-                  <button class="dropbtn btn btn-success" onclick="myfun(3)"> Author</button>
+                  <button class="dropbtn btn btn-success" onclick="dropDownFun(3)"> Author</button>
                   <div id="myDropdown3" class="dropdown-content">
-                    <a class="abc" href="#" onclick="filterBooks('author','JK Rowling')" >JK Rowling</a>
+                    <input class="insertText" type="text" placeholder="Cerca Autore" id="searchBarAuthor" style="width:500px">
+                    <a class="btn btn-success search" onclick="filterBooks('author','')"> Cerca</a>
+                  <!--  <a class="abc" href="#" onclick="filterBooks('author','JK Rowling')" >JK Rowling</a>
                     <a class="abc" href="#" onclick="filterBooks('author','Corona')">Corona</a>
                     <a class="abc" href="#" onclick="filterBooks('author','Manfredi')">Manfredi</a>
                     <a class="abc" href="#" onclick="filterBooks('author','Welsh')">Welsh</a>
@@ -44,15 +46,15 @@
                     <a class="abc" href="#" onclick="filterBooks('author','Quarantena')">Quarantena</a>
                     <a class="abc" href="#" onclick="filterBooks('author','Erik')">Erik</a>
                     <a class="abc" href="#" onclick="filterBooks('author','Pasticcio')">Pasticcio</a>
-                    <a class="abc" href="#" onclick="filterBooks('author','Johnny')">Johnny</a>
+                    <a class="abc" href="#" onclick="filterBooks('author','Johnny')">Johnny</a> -->
                   </div>
-                  <button class="dropbtn btn btn-success" onclick="myfun(2)"> years</button>
+                  <button class="dropbtn btn btn-success" onclick="dropDownFun(2)"> years</button>
                   <div id="myDropdown2" class="dropdown-content">
-                    <input type="text" class="inyear" placeholder="Da" id="fromYear">
-                    <input type="text" class="inyear" placeholder="A" id="toYear">
+                    <input type="text" class="insertText" placeholder="Da" id="fromYear">
+                    <input type="text" class="insertText" placeholder="A" id="toYear">
                     <a class="btn btn-success search center" onclick="filterBooksForYears()"> Cerca</a>
                   </div>
-                  <button class="dropbtn btn btn-success" onclick="myfun(4)" id="rating"> Rating</button>
+                  <button class="dropbtn btn btn-success" onclick="dropDownFun(4)" id="rating"> Rating</button>
                   <div id="myDropdown4" class="dropdown-content">
                     <a class="abc" href="#" onclick="filterBooks('from_rating','1')">1 star</a>
                     <a class="abc" href="#" onclick="filterBooks('from_rating','2')">2 stars</a>

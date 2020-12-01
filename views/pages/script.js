@@ -1,56 +1,19 @@
 var filter = ["?"];   // array for filter and use get
 
 
-function myfun(x) {           //for dop down the menu when u click away
-  var dropdowns;
-  switch(x) {
-    case 1:
-      dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
+function dropDownFun(x) {           //for dop down the menu when u click away
+  var dropdowns = document.getElementsByClassName("dropdown-content");
+  var i;
+  for (i = 0; i < dropdowns.length; i++) {
+    var openDropdown = dropdowns[i];
+    var id = openDropdown.getAttribute("id");
+    if(id !== "myDropdown"+x) {
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
       }
-      document.getElementById("myDropdown1").classList.toggle("show");
-    break;
-    case 2:
-      dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-      document.getElementById("myDropdown2").classList.toggle("show");
-    break;
-    case 3:
-      dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-      document.getElementById("myDropdown3").classList.toggle("show");
-    break;
-    case 4:
-      dropdowns = document.getElementsByClassName("dropdown-content");
-      var i;
-      for (i = 0; i < dropdowns.length; i++) {
-        var openDropdown = dropdowns[i];
-        if (openDropdown.classList.contains('show')) {
-          openDropdown.classList.remove('show');
-        }
-      }
-      document.getElementById("myDropdown4").classList.toggle("show");
-    break;
-    default:
-    break;
+    }
   }
+  document.getElementById("myDropdown"+x).classList.toggle("show");
 }
 
 function funFilter() {
@@ -59,7 +22,7 @@ function funFilter() {
 
 // Close the dropdown if the user clicks outside of it
 window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn') && !event.target.matches('.inyear') ) {
+  if (!event.target.matches('.dropbtn') && !event.target.matches('.insertText') ) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
     var i;
     for (i = 0; i < dropdowns.length; i++) {
@@ -95,6 +58,19 @@ function isIncludedForYear(from, to) {
 function selectBadge(type,val) {
   if(type == "title") {
     val = document.getElementById("searchBar").value;
+    var badge = document.getElementById("badge-"+type);
+    var badgeText = document.getElementById("badgeText-"+type);
+    if(val == "") {
+        badge.classList.remove("showBadge");     //hide badge filter
+    }
+    else {
+        badgeText.innerHTML= val;
+        if(!(badge.classList.contains("showBadge")))  //check flag if i have to show bagde again, toogle function is like a swtich
+         badge.classList.toggle("showBadge");    // show badge filter
+    }
+  }
+  else if(type == "author"){
+    val = document.getElementById("searchBarAuthor").value;
     var badge = document.getElementById("badge-"+type);
     var badgeText = document.getElementById("badgeText-"+type);
     if(val == "") {
@@ -167,6 +143,8 @@ function filterBooks(type,val) {
         badgeShow(type,val);
         if(type=="title")                            //special case when we filter with search bar, we need to update the value bc is not static;
           val = document.getElementById("searchBar").value;
+        else if(type == "author")
+          val = document.getElementById("searchBarAuthor").value;
         var txt = type+'='+val;
         if(filter.length == 1)
           filter.push(txt);
