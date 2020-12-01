@@ -63,6 +63,8 @@ paths:
                   $ref: '#/components/schemas/Book'
         '400':
           $ref: '#/components/responses/error-400'
+        '500':
+          $ref: '#/components/responses/error-500'
     post:
       security:
         - bearerAuth: []
@@ -108,6 +110,8 @@ paths:
           $ref: '#/components/responses/error-400'
         '401':
           $ref: '#/components/responses/error-401'
+        '500':
+          $ref: '#/components/responses/error-500'
   /api/books/{isbn}:
     get:
       description: >-
@@ -152,6 +156,8 @@ paths:
                   $ref: '#/components/schemas/Review'
         '404':
           $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
     post:
       security:
         - bearerAuth: []
@@ -192,6 +198,8 @@ paths:
           $ref: '#/components/responses/error-400'
         '401':
           $ref: '#/components/responses/error-401'
+        '500':
+          $ref: '#/components/responses/error-500'
   /api/users:
     post:
       summary: Create a user
@@ -233,6 +241,8 @@ paths:
               description: Link to the newly created user.
         '400':
           $ref: '#/components/responses/error-400'
+        '500':
+          $ref: '#/components/responses/error-500'
   /api/users/{id}:
     get:
       summary: "Info about a user"
@@ -273,6 +283,8 @@ paths:
                     description: "User's phone number"
         '404':
           $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
     put:
       security:
         - bearerAuth: []
@@ -313,6 +325,8 @@ paths:
           $ref: '#/components/responses/error-401'
         '404':
           $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
   /api/users/{id}/reviews:
       get:
         summary: "Get all review of a specific user"
@@ -336,6 +350,8 @@ paths:
                     $ref: '#/components/schemas/Review'
           '404':
             $ref: '#/components/responses/error-404'
+          '500':
+          $ref: '#/components/responses/error-500'
   /api/login:
     post:
       summary: Login endpoint
@@ -368,6 +384,8 @@ paths:
                     description: "The newly generated token"
         '400':
           $ref: "#/components/responses/error-400"
+        '500':
+          $ref: '#/components/responses/error-500'
   /api/reviews/{id}:
     get:
       summary: "Info about a review"
@@ -391,6 +409,8 @@ paths:
                   $ref: '#/components/schemas/Review'
         '404':
           $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
     delete:
       security:
         - bearerAuth: []
@@ -411,6 +431,8 @@ paths:
           $ref: '#/components/responses/error-401'
         '404':
           $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
     put:
       security:
         - bearerAuth: []
@@ -446,6 +468,8 @@ paths:
           $ref: '#/components/responses/error-401'
         '404':
           $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
 components:
   securitySchemes:
     bearerAuth:
@@ -497,7 +521,7 @@ components:
           description: "Book rating"
         book: 
           type: string
-          description: "Book reference of the new review"
+          description: "Book isbn of this review"
         user:
           type: string
           description: "User id of the review owner"
@@ -532,3 +556,16 @@ components:
                 error:
                   type: string
                   description: Detailed description about the error
+      error-500:
+        description: Server error
+        content: 
+          application/json:
+            schema:
+              type: object 
+              properties:
+                error:
+                  type: string
+                  description: Detailed description about the error
+                message:
+                  type: string
+                  description: Additional information about the error
