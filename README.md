@@ -1,4 +1,4 @@
-# is2-project
+# is2-project [![Build Status](https://travis-ci.org/Is2-project/is2-project.svg?branch=main)](https://travis-ci.org/Is2-project/is2-project)
 
 Progetto del corso di Ingegneria del Software 2 del corso di laurea in Informatica dell'università degli studi di Trento.
 
