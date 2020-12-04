@@ -50,8 +50,8 @@
                   </div>
                   <button class="dropbtn btn btn-success" onclick="dropDownFun(2)"> years</button>
                   <div id="myDropdown2" class="dropdown-content">
-                    <input type="text" class="insertText" placeholder="Da" id="fromYear">
-                    <input type="text" class="insertText" placeholder="A" id="toYear">
+                    <input type="number" class="insertText" placeholder="Da" id="fromYear">
+                    <input type="number" class="insertText" placeholder="A" id="toYear">
                     <a class="btn btn-success search center" onclick="filterBooksForYears()"> Cerca</a>
                   </div>
                   <button class="dropbtn btn btn-success" onclick="dropDownFun(4)" id="rating"> Rating</button>
@@ -93,12 +93,12 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="myCell"><button onclick="changeSorting(0)" class="btn btn-link">ISBN</button> <i id="span0"></i></th>
-                                    <th class="myCell"><button onclick="changeSorting(1)" class="btn btn-link">Titolo</button> <i id="span1"></i></th>
-                                    <th class="myCell"><button onclick="changeSorting(2)" class="btn btn-link">Autore</button> <i id="span2"></i></th>
-                                    <th class="myCell"><button onclick="changeSorting(3)" class="btn btn-link">Anno</button> <i id="span3"></i></th>
-                                    <th class="myCell"><button onclick="changeSorting(4)" class="btn btn-link">Genere</button> <i id="span4"></i></th>
-                                    <th class="myCell"><button onclick="changeSorting(5)" class="btn btn-link">Rating</button> <i id="span5"></i></th>
+                                    <th class="myCell"><button class="btn btn-link">ISBN</button> <i id="span0"></i></th>
+                                    <th class="myCell"><button class="btn btn-link">Titolo</button> <i id="span1"></i></th>
+                                    <th class="myCell"><button class="btn btn-link">Autore</button> <i id="span2"></i></th>
+                                    <th class="myCell"><button class="btn btn-link">Anno</button> <i id="span3"></i></th>
+                                    <th class="myCell"><button class="btn btn-link">Genere</button> <i id="span4"></i></th>
+                                    <th class="myCell"><button class="btn btn-link">Rating</button> <i id="span5"></i></th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
