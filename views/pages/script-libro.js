@@ -1,4 +1,13 @@
-var titleBook;
+
+
+function deleteRew(id) {
+  fetch('../api/reviews/' + id.toString())
+  .then((resp) => resp.json())
+  .then(function(data) {
+      return;
+  })
+  .catch( error => console.error(error) );
+}
 
 function loadUser(data) {         //load name user on the reviews
   var nickName = '';
@@ -13,6 +22,19 @@ function loadUser(data) {         //load name user on the reviews
     nickName='ERROR';
   }
 }
+function createStars(rating) {
+  var txt = "";
+  for(var i=1;i<=5;i++) { //stampo le stelline
+    txt+= '<span class="star ';
+    if(i <= rating)
+      txt+= 'on"></span>';
+    else if((i-rating) < 1)
+      txt+= 'half"></span>';
+    else
+      txt+= '"></span>';
+  }
+  return txt;
+}
 function loadReviews(data) {
   const ul = document.getElementById('tbody');      //set up the page with the reviews
   var txt = '';
@@ -22,12 +44,15 @@ function loadReviews(data) {
       txt+= '<tr>';
       txt+= '<td name= td'+rew.user+'>'+rew.user+'</td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
       txt+= '<td>';
-      for(var i=0;i<rew.rating;i++) {
-        txt+= '<i class="fas fa-star"></i>'; //stampo le stelline
-      }
+      txt+= createStars(rew.rating);
       txt+='</td>';
       txt+= '<td>'+rew.description+'</td>';
+      if(rew.user) {
+        document.getElementById("opt").style.removeProperty("display");
+        txt+= "<td> <a href='#' onclick='deleteRew("+rew.id+")' style='background-color: rgb(200,0,0); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong>X</strong></span></a></td>"
+      }
       txt+= '</tr>';
+
     }
   }
   else {
@@ -40,21 +65,18 @@ function loadReviews(data) {
 function loadBooks(data) {
     const ul = document.getElementById('book');
     var txt = '';
-    txt+= '<h1>'+data.title+'</h1>'; titleBook=data.title; //titol of the page
+    txt+= '<h1>'+data.title+'</h1>'; document.title = "BooksReviews "+data.title; //titol of the page
     txt+= '<h6> Author: '+data.author+'</h6>';
     txt+= '<h6> Genre: '+data.genre+'</h6>';
     txt+= '<h6> Year: '+data.year+'</h6>';
     txt+= '<h6> Rating: ';
-    for(var i=0;i<data.rating;i++) {
-      txt+= '<i class="fas fa-star"></i>'; //stampo le stelline
-    }
+    txt+= createStars(data.rating);
     txt+='</h6>';
     txt+= '<h6> Isbn: '+data.isbn+'</h6>';
     ul.innerHTML = txt; // text html that we insert
 }
 
-function httpGetUserName (user) {
-  console.log(user);            // commetto per vedere cosa chiedo
+function httpGetUserName (user) {         // commetto per vedere cosa chiedo
     fetch('../api/users/' + user.toString())
     .then((resp) => resp.json())
     .then(function(data) {

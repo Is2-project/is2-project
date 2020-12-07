@@ -2,11 +2,12 @@
 <html>
 
 <head>
-    <title>BooksReviews - <script>titleBook</script></title>
+    <title>BooksReviews</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/stars.css">
 
     <style>
         .myCell{
@@ -26,9 +27,6 @@
     <br><br><br><br><br><br>
     <div id="book">
     </div>
-
-    <!--  <br><br><br><br><br><br>-->
-
       <div class="row">
           <div class="col-sm-12" id="book">
               <br>
@@ -38,6 +36,7 @@
                       <th class="myCell">Utente</th>
                       <th class="myCell">Voto</th>
                       <th class="myCell">Recensione</th>
+                      <th id="opt" class="myCell" style="display: none"> options </th>
                   </tr>
                   </thead>
                   <tbody id="tbody">
@@ -45,23 +44,7 @@
               </table>
 
               <br><br>
-  <!--
-              <?php
-
-                  $ris = $conn->query("SELECT * FROM recensioni WHERE id_utente=".$_SESSION['id_utente']." AND isbn=".$isbn);
-
-                  if($ris->num_rows == 0)
-                      $recensito = false;
-                  else
-                      $recensito = true;
-
-
-              ?>
-  -->
-
               <a id="addReview" class="btn btn-success">Aggiungi recensione</a>
-              <!--<a href="eliminaRecensione.php?isbn=<?php echo $isbn; ?>" class="btn btn-danger">Elimina recensione</a> <?php } ?>-->
-
               <br><br><br><br><br>
 
           </div>

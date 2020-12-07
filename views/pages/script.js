@@ -191,6 +191,20 @@ function filterBooksForYears() {
       httpGetBooks(txt);
 }
 
+function createStars(rating) {
+  var txt = "";
+  for(var i=1;i<=5;i++) { //stampo le stelline
+    txt+= '<span class="star ';
+    if(i <= rating)
+      txt+= 'on"></span>';
+    else if((i-rating) < 1)
+      txt+= 'half"></span>';
+    else
+      txt+= '"></span>';
+  }
+  return txt;
+}
+
 function loadBooks(data) {
     const ul = document.getElementById('tbody');
     var txt = '';
@@ -205,9 +219,7 @@ function loadBooks(data) {
       if(lib.rating == null){
         txt+="Nessuna recensione disponibile";
       } else {
-      for(var i=0;i<lib.rating;i++) {
-        txt+= '<i class="fas fa-star"></i>'; //stampo le stelline
-      }
+        txt+= createStars(lib.rating);
       txt+='</td>';
       txt+= '</tr>';
       }
