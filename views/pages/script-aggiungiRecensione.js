@@ -1,6 +1,52 @@
 var ratingFocus;
+function getUrl (){         
+  const queryString = window.location.search;     //take url
+  const urlParams = new URLSearchParams(queryString);
+  return urlParams;
+}
+function httpGetBook(isbn) {      //GET BOOK
+  fetch('../api/books/' + isbn.toString())
+  .then((resp) => resp.json())
+  .then(function(data) {
+      document.getElementById("tit").innerHTML= data.title;
+      document.getElementById("other").innerHTML= data.author+", "+data.genre;
+      return;
+  })
+  .catch( error => console.error(error) );
+}
 
-function setFocus(num) {
+function httpGetReview(id) {    //GET REVIEWS
+  fetch('../api/reviews/' + id.toString())
+  .then((resp) => resp.json())
+  .then(function(data) {
+      setFocus(data.rating);
+      document.getElementById("voto"+data.rating).checked = true;
+      document.getElementById("recensione").value= data.description;
+      return;
+  })
+  .catch( error => console.error(error) );
+}
+
+function buildPage() {    //FUCNTION THAT BUILD THE PAGE
+  var urlParams = getUrl();
+  const isbn = urlParams.get('isbn');
+  const action = urlParams.get('action');
+  const id = urlParams.get('id');
+  document.getElementById("annulla").href = "/libro?isbn="+isbn;
+  httpGetBook(isbn);
+  if(action==="true") {
+    document.getElementById("titlePage").innerHTML = "BooksReviews - Modifica Recensione"
+    document.getElementById("modify").innerHTML = "Modifica recensione";
+    document.getElementById("btn-end").innerHTML = "Modifica";
+    httpGetReview(id);
+  }
+  else {
+    document.getElementById("modify").innerHTML = "Aggiungi recensione";
+  }
+
+}
+
+function setFocus(num) {      //SET FOCUS ON RATING
   for(var i = 1;i <=5;i++) {
     if(i!=num) {
       val = document.getElementById("lab"+i);
@@ -48,37 +94,71 @@ function checkRating(txt) {
 
 function formValidation() {
   if(checkDescription("recensione") && checkRating("voto")) {
-    const queryString = window.location.search;     //take isbn from url
-    const urlParams = new URLSearchParams(queryString);
+    var urlParams = getUrl();     //take isbn from url
     const isbn = urlParams.get('isbn');
+    const id = urlParams.get('id');
+    const action = urlParams.get('action');
     let obj = {
       description: document.getElementById("recensione").value,
       rating: ratingFocus,
     };
-    //POST REQUEST REVIEW
-    fetch('../api/books/'+isbn+'/reviews', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json'},
-      body: JSON.stringify(obj),
-    })
-    .then((resp) => {
-      if(resp.status == 201) {
-        window.location.href = "/libro?isbn="+isbn;
-        alert("Hai aggiunto una nuova recensione!");
-      }
-      else if(resp.status == 400){
-        window.location.href = "/libro?isbn="+isbn;
-        alert("Non puoi inserire questo voto!");
-      }
-      else if(resp.status == 401){
-        window.location.href = "/signin";
-        alert("Devi accerede con un account prima di recensire un libro");
-      }
-      else if(resp.status == 404){
-        window.location.href = "/";
-        alert("Il libro che vuoi recensire non esiste!");
-      }
-    })
-    .catch(error => {console.error(error);});
+    if(action!=="true") { //check if is an addition or a modification
+      //POST REQUEST REVIEW
+      fetch('../api/books/'+isbn+'/reviews', {      //POST FOR ADDICTION
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(obj),
+      })
+      .then((resp) => {
+        if(resp.status == 201) {
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Hai aggiunto una nuova recensione!");
+        }
+        else if(resp.status == 400){
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Non puoi inserire questo voto!");
+        }
+        else if(resp.status == 401){
+          window.location.href = "/signin";
+          alert("Devi accerede con un account prima di recensire un libro");
+        }
+        else if(resp.status == 404){
+          window.location.href = "/";
+          alert("Il libro che vuoi recensire non esiste!");
+        }
+      })
+      .catch(error => {console.error(error);});
+    }
+    else {
+      fetch('../api/reviews/'+id, {     //PUT FOR MODIFICATION
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify(obj),
+      })
+      .then((resp) => {
+        if(resp.status == 200) {
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Hai modificato la recensione!");
+        }
+        else if(resp.status == 400){
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Non puoi inserire questo voto!");
+        }
+        else if(resp.status == 401){
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Non puoi modificare la recensione di qualcun'altro oppure devi eseguire l'accesso!");
+        }
+        else if(resp.status == 404){
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Recensione non esistente!");
+        }
+        else if(resp.status == 500){
+          window.location.href = "/libro?isbn="+isbn;
+          alert("Errore del database!");
+        }
+      })
+      .catch(error => {console.error(error);});
+    }
   }
 }
+buildPage();    //FUCNTION THAT BUILD THE PAGE

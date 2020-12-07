@@ -1,9 +1,27 @@
-
-
 function deleteRew(id) {
-  fetch('../api/reviews/' + id.toString())
-  .then((resp) => resp.json())
-  .then(function(data) {
+  fetch('../api/reviews/' + id.toString(), {
+    method:'DELETE',
+  })
+  .then(resp => {
+    if(resp.status == 200) {
+      buildPage();
+    }
+    else if(resp.status == 400){
+      buildPage();
+      alert("Non puoi inserire questo voto!");
+    }
+    else if(resp.status == 401){
+      buildPage();
+      alert("Non puoi eliminare la recensione di qualcun'altro oppure devi eseguire l'accesso!");
+    }
+    else if(resp.status == 404){
+      buildPage();
+      alert("Recensione non esistente!");
+    }
+    else if(resp.status == 500){
+      buildPage();
+      alert("Errore del database!");
+    }
       return;
   })
   .catch( error => console.error(error) );
@@ -36,20 +54,22 @@ function createStars(rating) {
   return txt;
 }
 function loadReviews(data) {
+  var loc = location.hostname;
   const ul = document.getElementById('tbody');      //set up the page with the reviews
   var txt = '';
   if(data[0] !== undefined) {
     for(let rew of data) {
-      //httpGetUser(rew.user);
       txt+= '<tr>';
       txt+= '<td name= td'+rew.user+'>'+rew.user+'</td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
       txt+= '<td>';
       txt+= createStars(rew.rating);
       txt+='</td>';
       txt+= '<td>'+rew.description+'</td>';
-      if(rew.user) {
+      if(rew.user) { // CAMBIARE PERCHE SBAGLIATA
         document.getElementById("opt").style.removeProperty("display");
-        txt+= "<td> <a href='#' onclick='deleteRew("+rew.id+")' style='background-color: rgb(200,0,0); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong>X</strong></span></a></td>"
+        console.log("id:  "+rew.id);
+        txt+= "<td> <a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/matita.svg'></strong></span></a>";
+        txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\" > <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/delete.svg'></strong></span></a></td>";
       }
       txt+= '</tr>';
 
@@ -86,7 +106,6 @@ function httpGetUserName (user) {         // commetto per vedere cosa chiedo
     .catch( error => console.error(error) );
 }
 function httpGetBook (isbn) {  //get the arg of the book and build the part of book present
-  console.log(isbn);            // commetto per vedere cosa chiedo
     fetch('../api/books/' + isbn.toString())
     .then((resp) => resp.json())
     .then(function(data) {
@@ -97,7 +116,6 @@ function httpGetBook (isbn) {  //get the arg of the book and build the part of b
 }
 
 function httpGetReviews (isbn) {  // get the reviews of the book and build the table
-  console.log(isbn);            // commetto per vedere cosa chiedo
     fetch('../api/books/'+ isbn.toString()+'/reviews')
     .then((resp) => resp.json())
     .then(function(data) {

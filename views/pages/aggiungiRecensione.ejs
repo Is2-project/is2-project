@@ -1,9 +1,7 @@
-
-
+<!DOCTYPE html>
 <html>
-
 <head>
-    <title>BooksReviews - Aggiungi Recensione</title>
+    <title id="titlePage">BooksReviews - Aggiungi Recensione</title>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
@@ -19,7 +17,8 @@
         <div class="col-sm-12">
 
             <br><br><br><br><br>
-            <h1>Aggiungi Recensione</h1>
+            <h1 id="tit"></h1>
+            <h3 id="other"></h3>
             <br><br>
 
         </div>
@@ -29,7 +28,7 @@
             <hr>
 
             <form method="post" id="recForm">
-
+                <h3 id="modify"></h3> <br>
                 <h3>Voto:</h3>
 
                 <div class="fieldset">
@@ -61,8 +60,8 @@
                     </div>
 
                     <div class="form-group">
-                        <button class="btn btn-success" type="button" onclick="formValidation()"> Aggiungi </button>
-                        <a href="/" class="btn btn-danger">Annulla</a>
+                        <button id="btn-end" class="btn btn-success" type="button" onclick="formValidation()"> Aggiungi </button>
+                        <a id="annulla" class="btn btn-danger">Annulla</a>
                     </div>
 
                 </div>
