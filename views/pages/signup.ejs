@@ -8,8 +8,15 @@
         <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
         <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
-        <script src="js/jquery-3.5.1.js"></script>
-        <script src="js/userutils.js"></script>
+        
+        <%- include('inc/libraries'); %>
+
+        <script>
+            /* Go to home page if already logged in */
+            if (userId()) {
+                window.location.href = "/";
+            }
+        </script>
     </head>
 
     <body>

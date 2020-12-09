@@ -3,7 +3,7 @@
 */
 
 function logout() {
-    document.cookie = "email=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;"
+    Cookies.remove('token');
     window.location.href = "/";
 }
 
@@ -13,10 +13,16 @@ function auth(email, password) {
        email: email,
        password: password
     }, (data) => {
-        window.location.href = "/"; //Auth successful, redirect to homepage
+        //window.location.href = "/"; //Auth successful, redirect to homepage
+        //console.log(data.token);
+        //console.log(jwt_decode(data.token));
+        Cookies.set('token', data.token);
+        
     }).fail((res) => {
         alert('Errore: ' + JSON.parse(response.responseText).error);
     });
+
+
 }
 
 function register(email, password, nome, cognome, telefono) {
@@ -35,12 +41,13 @@ function register(email, password, nome, cognome, telefono) {
 }
 
 function updateInfo(email, password, nome, cognome, telefono) {
+    /*
     console.log(email);
     console.log(password);
     console.log(nome);
     console.log(cognome);
     console.log(telefono);
-
+    */
 
     $.ajax({
       url: '/api/users/' + email,
@@ -55,4 +62,19 @@ function updateInfo(email, password, nome, cognome, telefono) {
         alert('Load was performed.');
       }
     });
+}
+
+function userId() {
+    if (Cookies.get('token')) {        
+        if (Date.now() / 1000 < jwt_decode(Cookies.get('token')).exp) {
+            //Token not expired
+            return jwt_decode(Cookies.get('token')).id;
+        } else {
+            //Token expired
+            Cookies.remove('token');
+            return false;
+        } 
+    }
+    //Token not present
+    return false;
 }
