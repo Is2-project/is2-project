@@ -10,19 +10,14 @@ function logout() {
 function auth(email, password) {
     //Chiama /api/login con username e password
     $.post('/api/login', {
-       email: email,
-       password: password
+        email: email,
+        password: password
     }, (data) => {
-        //window.location.href = "/"; //Auth successful, redirect to homepage
-        //console.log(data.token);
-        //console.log(jwt_decode(data.token));
         Cookies.set('token', data.token);
-        
+        window.location.href = document.referrer ?? '/';    
     }).fail((res) => {
         alert('Errore: ' + JSON.parse(response.responseText).error);
     });
-
-
 }
 
 function register(email, password, nome, cognome, telefono) {
@@ -65,6 +60,7 @@ function updateInfo(email, password, nome, cognome, telefono) {
 }
 
 function userId() {
+    /* Returns the id of the current logged user. If not logged returns false. */
     if (Cookies.get('token')) {        
         if (Date.now() / 1000 < jwt_decode(Cookies.get('token')).exp) {
             //Token not expired
@@ -77,4 +73,22 @@ function userId() {
     }
     //Token not present
     return false;
+}
+
+function userById(id) {
+    var d;
+    $.ajax({
+        url: '/api/users/' + id,
+        type: 'GET'        ,
+        success: (data) => { d = data; },
+        async: false
+    }).fail((res) => {
+        alert('Errore: ' + JSON.parse(res.responseText).error);
+    });
+    return d;
+}
+
+var userObj;
+function user() {
+    return userObj ?? (userObj = userById(userId()));
 }

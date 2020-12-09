@@ -28,31 +28,16 @@
 
 
         <div>
-            <script type="text/javascript">
-                function getCookie(cname) {
-                  var name = cname + "=";
-                  var decodedCookie = decodeURIComponent(document.cookie);
-                  var ca = decodedCookie.split(';');
-                  for(var i = 0; i <ca.length; i++) {
-                    var c = ca[i];
-                    while (c.charAt(0) == ' ') {
-                      c = c.substring(1);
-                    }
-                    if (c.indexOf(name) == 0) {
-                      return c.substring(name.length, c.length);
-                    }
-                  }
-                  return "";
-                }
+            <script type="text/javascript">              
 
-                if (getCookie('email') == ""){
+                if (!userId()){
                     //no cookie
                     html = "<a class='btn btn-outline-success my-2 my-sm-0' href='/signup' role='button'>Registrati</a>\
                     <a class='btn btn-outline-success my-2 my-sm-0' href='/signin' role='button'>Accedi</a>";
                     document.write(html);
                 } else {
                     //have cookie
-                    html = "<a class='btn btn-outline-success my-2 my-sm-0' href='/profile' role='button'>" + getCookie('email') + "</a>";
+                    html = "<a class='btn btn-outline-success my-2 my-sm-0' href='/profile' role='button'>" + user().name + " " + user().surname + "</a>";
                     document.write(html);
                 }
 
