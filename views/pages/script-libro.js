@@ -1,6 +1,10 @@
 function deleteRew(id) {
   fetch('../api/reviews/' + id.toString(), {
     method:'DELETE',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    }
   })
   .then(resp => {
     if(resp.status == 200) {

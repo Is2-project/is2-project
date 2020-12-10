@@ -106,7 +106,10 @@ function formValidation() {
       //POST REQUEST REVIEW
       fetch('../api/books/'+isbn+'/reviews', {      //POST FOR ADDICTION
         method: 'POST',
-        headers: { 'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        },
         body: JSON.stringify(obj),
       })
       .then((resp) => {
@@ -132,7 +135,10 @@ function formValidation() {
     else {
       fetch('../api/reviews/'+id, {     //PUT FOR MODIFICATION
         method: 'PUT',
-        headers: { 'Content-Type': 'application/json'},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        },
         body: JSON.stringify(obj),
       })
       .then((resp) => {
