@@ -36,20 +36,9 @@ function register(email, password, nome, cognome, telefono) {
 }
 
 function updateInfo(email, password, nome, cognome, telefono) {
-    /*
-    console.log(email);
-    console.log(password);
-    console.log(nome);
-    console.log(cognome);
-    console.log(telefono);
-    */
-
-    
-
-
 
     $.ajax({
-      url: '/api/users/' + email,
+      url: '/api/users/' + userId(),
       type: 'PUT',
       data: {
          password: password,
@@ -59,8 +48,11 @@ function updateInfo(email, password, nome, cognome, telefono) {
       },
       headers: { 'Authorization': 'Bearer ' + getToken() },
       success: function(data) {
-        alert('Load was performed.');
+        //alert('Load was performed.');
+        window.location.href = '/';
       }
+    }).fail((res) => {
+        alert('Errore: ' + JSON.parse(res.responseText).error);
     });
 }
 
