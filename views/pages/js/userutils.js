@@ -44,6 +44,10 @@ function updateInfo(email, password, nome, cognome, telefono) {
     console.log(telefono);
     */
 
+    
+
+
+
     $.ajax({
       url: '/api/users/' + email,
       type: 'PUT',
@@ -53,6 +57,7 @@ function updateInfo(email, password, nome, cognome, telefono) {
          surname: cognome,
          phone: telefono
       },
+      headers: { 'Authorization': 'Bearer ' + getToken() },
       success: function(data) {
         alert('Load was performed.');
       }
@@ -79,7 +84,8 @@ function userById(id) {
     var d;
     $.ajax({
         url: '/api/users/' + id,
-        type: 'GET'        ,
+        type: 'GET',
+        headers: { 'Authorization': 'Bearer ' + getToken() },
         success: (data) => { d = data; },
         async: false
     }).fail((res) => {
@@ -92,3 +98,8 @@ var userObj;
 function user() {
     return userObj ?? (userObj = userById(userId()));
 }
+
+function getToken() {
+    return Cookies.get('token');
+}
+
