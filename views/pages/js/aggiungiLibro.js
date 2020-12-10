@@ -1,5 +1,5 @@
 function requiredItem (str, minLength, maxLength ) {
-    var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
     val = document.getElementById(str);
     if(val.value === "") {// check is value is empty, if yes return false and set the class visible effect to the html
         document.getElementById(str+"Error").innerHTML = "Campo obbligatorio!";
@@ -83,21 +83,26 @@ function onSub() {      //function use when we submit the form
     title: document.getElementById("title").value,
     author: document.getElementById("author").value,
     year: document.getElementById("year").value,
-    genre: document.getElementById("genre").value
+    genre: document.getElementById("genre").value.toLowerCase()
   };
   fetch('../api/books', { //POST request
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify( obj ),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + getToken()
+      },
+      body: JSON.stringify(obj),
   })
   .then((resp) => {
       if(resp.status == 401) {        //check if the user is logged, if not redirect to login page
         window.location.href = "/signin";
-        alert("Devi accerede con un account prima di inserire un libro");
+        alert("Devi accedere con un account prima di inserire un libro");
       }
       else if(resp.status == 201){
         window.location.href = "/";
         alert("Hai aggiunto un nuovo libro!");
+      } else {
+        console.log(resp);
       }
       return;
   })
