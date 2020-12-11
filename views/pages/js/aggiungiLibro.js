@@ -101,8 +101,14 @@ function onSub() {      //function use when we submit the form
       else if(resp.status == 201){
         window.location.href = "/";
         alert("Hai aggiunto un nuovo libro!");
-      } else {
-        console.log(resp);
+      }
+      else if(resp.status == 400) {
+        window.location.href = "/";
+        alert("Errori di paramentri!");
+      }
+      else if(resp.status == 500) {
+        window.location.href = "/";
+        alert("Database error!");
       }
       return;
   })

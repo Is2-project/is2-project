@@ -115,7 +115,6 @@ function badgeShow (type,val) {
 }
 
 function httpGetBooks (text) {
-  console.log(text);            // commetto per vedere cosa chiedo
   if(text == "") {
     fetch('../api/books')
     .then((resp) => resp.json())
@@ -248,3 +247,5 @@ function removeFilter(type) {
   httpGetBooks(txt);
 }
 filterBooks(undefined,undefined); // first call gives all books
+if(!userId())
+  document.getElementById("addBook").style.display= "none";

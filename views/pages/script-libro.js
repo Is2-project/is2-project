@@ -58,6 +58,7 @@ function createStars(rating) {
   return txt;
 }
 function loadReviews(data) {
+  var flag= false;
   var loc = location.hostname;
   const ul = document.getElementById('tbody');      //set up the page with the reviews
   var txt = '';
@@ -69,10 +70,11 @@ function loadReviews(data) {
       txt+= createStars(rew.rating);
       txt+='</td>';
       txt+= '<td>'+rew.description+'</td>';
-      if(rew.user) { // CAMBIARE PERCHE SBAGLIATA
-        document.getElementById("opt").style.removeProperty("display");
-        console.log("id:  "+rew.id);
-        txt+= "<td> <a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/matita.svg'></strong></span></a>";
+      if(rew.user == userId()) { // CAMBIARE PERCHE SBAGLIATA
+        //document.getElementById("opt").style.removeProperty("display");
+        document.getElementById("addReview").style.display = "none";
+
+        txt+= "<td style='border-top:none; min-width:130px;'> <a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/matita.svg'></strong></span></a>";
         txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\" > <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/delete.svg'></strong></span></a></td>";
       }
       txt+= '</tr>';
@@ -133,9 +135,14 @@ function buildPage () { // fun that biuld page
   const queryString = window.location.search;     //take isbn from url
   const urlParams = new URLSearchParams(queryString);
   const isbn = urlParams.get('isbn');
-  document.getElementById("addReview").href = "aggiungiRecensione?isbn="+isbn;
   httpGetBook(isbn);
   httpGetReviews(isbn);
+  if(!userId())
+    document.getElementById("addReview").style.display= "none";
+  else {
+    document.getElementById("addReview").href = "aggiungiRecensione?isbn="+isbn;
+    document.getElementById("addReview").style.display= "inline-block";
+  }
 
 
 }

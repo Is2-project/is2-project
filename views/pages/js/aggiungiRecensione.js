@@ -1,5 +1,5 @@
 var ratingFocus;
-function getUrl (){         
+function getUrl (){
   const queryString = window.location.search;     //take url
   const urlParams = new URLSearchParams(queryString);
   return urlParams;
