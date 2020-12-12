@@ -351,7 +351,7 @@ paths:
           '404':
             $ref: '#/components/responses/error-404'
           '500':
-          $ref: '#/components/responses/error-500'
+            $ref: '#/components/responses/error-500'
   /api/login:
     post:
       summary: Login endpoint
@@ -470,6 +470,103 @@ paths:
           $ref: '#/components/responses/error-404'
         '500':
           $ref: '#/components/responses/error-500'
+          
+  /api/reviews/{id}/like:
+    post:
+      security:
+        - bearerAuth: []
+      summary: "Like a review"
+      description: >-
+        Mark this review as liked
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: "Remove like from a review"
+      description: >-
+        Remove the like from this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+          
+  /api/reviews/{id}/dislike:
+    post:
+      security:
+        - bearerAuth: []
+      summary: "Dislike a review"
+      description: >-
+        Mark this review as disliked
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: "Remove dislike from a review"
+      description: >-
+        Remove dislike from this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+          
 components:
   securitySchemes:
     bearerAuth:
@@ -525,6 +622,16 @@ components:
         user:
           type: string
           description: "User id of the review owner"
+        date:
+          type: string
+          description: "Creation date and time"
+        likes:
+          type: integer
+          description: "Number of likes"
+        dislikes:
+          type: integer
+          description: "Number of dislikes"
+
   responses:
       error-400:
         description: Invalid request
