@@ -11,11 +11,34 @@
     <%- include('inc/libraries'); %>
 
     <style>
+        .container {
+            max-width: 1350px;
+        }
         .myCell{
             min-width: 150px;
         }
-        .fieldBooks {
-
+        .classLike *{
+          opacity: 0.5;
+        }
+        .classLike figcaption{
+          opacity: 0.8;
+        }
+        .checked *{
+          opacity: 1;
+        }
+        figure {
+          display:table;
+          float:left;
+        }
+        a {
+          color:white;
+        }
+        a.classLike:hover *{
+          opacity: 1;
+          cursor:pointer;
+        }
+        a:hover {
+          color:white;
         }
     </style>
 
@@ -37,7 +60,7 @@
                       <th class="myCell">Utente</th>
                       <th class="myCell">Voto</th>
                       <th class="myCell">Recensione</th>
-                      <!--<th id="opt" class="myCell" style="display: none"></th>-->
+                      <!--<th id="mipiace" class="myCell">Like</th>-->
                   </tr>
                   </thead>
                   <tbody id="tbody">
@@ -52,7 +75,7 @@
       </div>
 
   </div>
-<script src="script-libro.js"></script>
+<script src="js/script-libro.js"></script>
 </body>
 
 </html>

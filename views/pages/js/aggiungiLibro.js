@@ -1,5 +1,5 @@
 function requiredItem (str, minLength, maxLength ) {
-    var format = /[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
+    var format = /[`@#$%^*()_+\-=\[\]{}\\|<>\/~]/;
     val = document.getElementById(str);
     if(val.value === "") {// check is value is empty, if yes return false and set the class visible effect to the html
         document.getElementById(str+"Error").innerHTML = "Campo obbligatorio!";
@@ -121,3 +121,9 @@ function formValidation () {  //function to validate the form
           onSub();
     }
 }
+
+document.onkeydown = function(e){
+ if(e.keyCode == 13){
+   formValidation ();
+ }
+};

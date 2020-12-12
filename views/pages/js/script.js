@@ -33,6 +33,22 @@ window.onclick = function(event) {
     }
   }
 }
+
+document.getElementById('searchBarAuthor').onkeydown = function(e){
+   if(e.keyCode == 13){
+     filterBooks('author','');
+   }
+};
+document.getElementById('fromYear').onkeydown = function(e){
+   if(e.keyCode == 13){
+     filterBooksForYears();
+   }
+};
+document.getElementById('toYear').onkeydown = function(e){
+   if(e.keyCode == 13){
+     filterBooksForYears();
+   }
+};
 function isIncluded(type, val) {
 
   for(var j = 0; j<filter.length; j++) {

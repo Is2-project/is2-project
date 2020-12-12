@@ -167,4 +167,10 @@ function formValidation() {
     }
   }
 }
+
+document.onkeydown = function(e){
+ if(e.keyCode == 13){
+   formValidation();
+ }
+};
 buildPage();    //FUCNTION THAT BUILD THE PAGE
