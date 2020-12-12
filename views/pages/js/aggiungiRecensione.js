@@ -114,20 +114,20 @@ function formValidation() {
       })
       .then((resp) => {
         if(resp.status == 201) {
-          window.location.href = "/libro?isbn="+isbn;
           alert("Hai aggiunto una nuova recensione!");
+          window.location.href = "/libro?isbn="+isbn;
         }
         else if(resp.status == 400){
-          window.location.href = "/libro?isbn="+isbn;
           alert("Non puoi inserire questo voto!");
+          window.location.href = "/libro?isbn="+isbn;
         }
         else if(resp.status == 401){
-          window.location.href = "/signin";
           alert("Devi accerede con un account prima di recensire un libro");
+          window.location.href = "/signin";
         }
         else if(resp.status == 404){
-          window.location.href = "/";
           alert("Il libro che vuoi recensire non esiste!");
+          window.location.href = "/";
         }
       })
       .catch(error => {console.error(error);});
@@ -143,24 +143,24 @@ function formValidation() {
       })
       .then((resp) => {
         if(resp.status == 200) {
-          window.location.href = "/libro?isbn="+isbn;
           alert("Hai modificato la recensione!");
+          window.location.href = "/libro?isbn="+isbn;
         }
         else if(resp.status == 400){
-          window.location.href = "/libro?isbn="+isbn;
           alert("Non puoi inserire questo voto!");
+          window.location.href = "/libro?isbn="+isbn;
         }
         else if(resp.status == 401){
-          window.location.href = "/libro?isbn="+isbn;
           alert("Non puoi modificare la recensione di qualcun'altro oppure devi eseguire l'accesso!");
+          window.location.href = "/libro?isbn="+isbn;
         }
         else if(resp.status == 404){
-          window.location.href = "/libro?isbn="+isbn;
           alert("Recensione non esistente!");
+          window.location.href = "/libro?isbn="+isbn;
         }
         else if(resp.status == 500){
-          window.location.href = "/libro?isbn="+isbn;
           alert("Errore del database!");
+          window.location.href = "/libro?isbn="+isbn;
         }
       })
       .catch(error => {console.error(error);});

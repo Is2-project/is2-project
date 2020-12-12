@@ -95,20 +95,20 @@ function onSub() {      //function use when we submit the form
   })
   .then((resp) => {
       if(resp.status == 401) {        //check if the user is logged, if not redirect to login page
-        window.location.href = "/signin";
         alert("Devi accedere con un account prima di inserire un libro");
+        window.location.href = "/signin";
       }
       else if(resp.status == 201){
-        window.location.href = "/";
         alert("Hai aggiunto un nuovo libro!");
+        window.location.href = "/";
       }
       else if(resp.status == 400) {
-        window.location.href = "/";
         alert("Errori di paramentri!");
+        window.location.href = "/";
       }
       else if(resp.status == 500) {
-        window.location.href = "/";
         alert("Database error!");
+        window.location.href = "/";
       }
       return;
   })
