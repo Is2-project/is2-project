@@ -351,7 +351,7 @@ paths:
           '404':
             $ref: '#/components/responses/error-404'
           '500':
-          $ref: '#/components/responses/error-500'
+            $ref: '#/components/responses/error-500'
   /api/login:
     post:
       summary: Login endpoint
@@ -470,6 +470,249 @@ paths:
           $ref: '#/components/responses/error-404'
         '500':
           $ref: '#/components/responses/error-500'
+          
+  /api/reviews/{id}/like:
+    post:
+      security:
+        - bearerAuth: []
+      summary: "Like a review"
+      description: >-
+        Mark this review as liked
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: "Remove like from a review"
+      description: >-
+        Remove the like from this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+          
+  /api/reviews/{id}/dislike:
+    post:
+      security:
+        - bearerAuth: []
+      summary: "Dislike a review"
+      description: >-
+        Mark this review as disliked
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: "Remove dislike from a review"
+      description: >-
+        Remove dislike from this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+          
+  /api/reviews/{id}/comments:
+    get:
+      summary: "Comments about a review"
+      description: >-
+        Get all the comments about this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Operation completed correctly'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    post:
+      security:
+        - bearerAuth: []
+      summary: "Create a comment for this review"
+      description: >-
+        Create a comment about this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - comment
+              properties:
+                comment:
+                  type: string
+                  description: "The comment body"
+      responses:
+        '200':
+          description: 'Comment was successfully created'
+          headers:
+            'Location':
+              schema:
+                type: string
+              description: Link to the newly created comment.
+        '400':
+          $ref: '#/components/responses/error-400'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+          
+  /api/comments/{id}:
+    get:
+      summary: "Info about a comment"
+      description: >-
+        Detailed info about the comment
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the comment'
+      responses:
+        '200':
+          description: 'Detailed info about the comment'
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    delete:
+      security:
+        - bearerAuth: []
+      summary: "Delete a comment"
+      description: >-
+        Delete a comment
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the comment'
+      responses:
+        '200':
+          description: 'Comment was correctly deleted'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
+    put:
+      security:
+        - bearerAuth: []
+      summary: "Update a comment"
+      description: >-
+        Update a comment
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the comment'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - comment
+              properties:
+                comment:
+                  type: string
+                  description: "New comment's body"
+      responses:
+        '200':
+          description: 'Comment was correctly updated'
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
 components:
   securitySchemes:
     bearerAuth:
@@ -525,6 +768,36 @@ components:
         user:
           type: string
           description: "User id of the review owner"
+        date:
+          type: string
+          description: "Creation date and time"
+        likes:
+          type: integer
+          description: "Number of likes"
+        dislikes:
+          type: integer
+          description: "Number of dislikes"
+    Comment:
+      type: object
+      properties:
+        self:
+          type: string
+          description: "Link to this object"
+        id:
+          type: string
+          description: "Comment's unique id"
+        comment:
+          type: string
+          description: "Comment's body"
+        review:
+          type: string
+          description: "Review's id"
+        user:
+          type: string
+          description: "User id of the comment's author"
+        date:
+          type: string
+          description: "Creation date and time"
   responses:
       error-400:
         description: Invalid request
