@@ -1,5 +1,3 @@
 language: node_js
 node_js:
 - 15
-before_install:
-- openssl aes-256-cbc -K $encrypted_fb088dcee1f3_key -iv $encrypted_fb088dcee1f3_iv -in secrets.json.enc -out secrets.json -d

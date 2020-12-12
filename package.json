@@ -7,8 +7,9 @@
     "lib": "lib"
   },
   "scripts": {
-    "test": "jest",
-    "start": "node index.js"
+    "decrypt": "if [[ -v openssl_key ]]; then openssl aes-256-cbc -K $openssl_key -iv $openssl_iv -in secrets.json.enc -out secrets.json -d; fi",
+    "test": "npm run decrypt && jest",
+    "start": "npm run decrypt && node index.js"
   },
   "repository": {
     "type": "git",
