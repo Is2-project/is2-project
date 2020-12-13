@@ -472,6 +472,36 @@ paths:
           $ref: '#/components/responses/error-500'
           
   /api/reviews/{id}/like:
+    get:
+      security:
+        - bearerAuth: []
+      summary: "Check if the current user has liked this review"
+      description: >-
+        Check if the current user has liked this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Returns the result'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  like:
+                    type: boolean
+                    description: "True iff the authenticated user has liked the review"
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
     post:
       security:
         - bearerAuth: []
@@ -520,6 +550,36 @@ paths:
           $ref: '#/components/responses/error-500'
           
   /api/reviews/{id}/dislike:
+    get:
+      security:
+        - bearerAuth: []
+      summary: "Check if the current user has disliked this review"
+      description: >-
+        Check if the current user has disliked this review
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+          required: true
+          description: 'id of the review'
+      responses:
+        '200':
+          description: 'Returns the result'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  dislike:
+                    type: boolean
+                    description: "True iff the authenticated user has disliked the review"
+        '401':
+          $ref: '#/components/responses/error-401'
+        '404':
+          $ref: '#/components/responses/error-404'
+        '500':
+          $ref: '#/components/responses/error-500'
     post:
       security:
         - bearerAuth: []
