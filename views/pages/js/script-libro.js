@@ -31,6 +31,99 @@ function deleteRew(id) {
   .catch( error => console.error(error) );
 }
 
+
+function setLike(text,id_rew) {
+  if(userId() !== false) {
+    var elem = document.getElementById(text+id_rew);
+    if(text === "like")
+      document.getElementById("dislike"+id_rew).classList.remove("checked");
+    else if (text === "dislike")
+      document.getElementById("like"+id_rew).classList.remove("checked");
+
+    if(elem.classList.contains("checked")) {
+      /*fetch('../api/reviews/'+id_rew.toString()+'/'+text , {
+        method:'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        }
+      })
+      .then(resp => {
+        if(resp.status == 200) {
+          //pass
+        }
+        else if(resp.status == 400){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+        else if(resp.status == 401){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+        else if(resp.status == 404){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+        else if(resp.status == 500){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+          return;
+      })
+      .catch( error => console.error(error) );
+      }*/
+
+    }
+    else {
+      /*fetch('../api/reviews/'+id_rew.toString()+'/'+text , {
+        method:'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + getToken()
+        },
+        body: JSON.stringify(),
+      })
+      .then(resp => {
+        if(resp.status == 200) {
+          //pass
+        }
+        else if(resp.status == 400){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+        else if(resp.status == 401){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+        else if(resp.status == 404){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+        else if(resp.status == 500){
+          document.getElementById("like"+id_rew).classList.remove("checked");
+          document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Error!");
+        }
+          return;
+      })
+      .catch( error => console.error(error) );
+      }*/
+    }
+    document.getElementById(text+id_rew).classList.toggle("checked");
+  }
+  else {
+    alert("Devi essere loggato!");
+    window.location.href = "/";
+  }
+}
+
 function loadUser(data) {         //load name user on the reviews
   var nickName = '';
   if(data!==undefined) {
@@ -70,12 +163,19 @@ function loadReviews(data) {
       txt+= createStars(rew.rating);
       txt+='</td>';
       txt+= '<td>'+rew.description+'</td>';
-      if(rew.user == userId()) { // CAMBIARE PERCHE SBAGLIATA
+      if(rew.user == userId()) { // controllo se la recensione é stata fatta dall'utente loggato al momento
         //document.getElementById("opt").style.removeProperty("display");
         document.getElementById("addReview").style.display = "none";
-
         txt+= "<td style='border-top:none; min-width:130px;'> <a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/matita.svg'></strong></span></a>";
         txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\" > <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/delete.svg'></strong></span></a></td>";
+      }
+      else if(userId()!== false){
+        txt+="<td style='border-top:none; min-width:130px;'><figure style='margin-right:40px;'><a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption>0</figcaption></figure></a>";
+        txt+="<figure><a onclick=\"setLike(\'dislike\',\'"+rew.id+"\')\"; id='dislike"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/dislike.svg'><figcaption>0</figcaption></figure></a></td>";
+      }
+      else {
+        txt+="<td style='border-top:none; min-width:130px;'><figure style='margin-right:40px;'><a><img style='width: 25px;' src='img/like.svg'><figcaption>0</figcaption></figure></a>";
+        txt+="<figure><a><img style='width: 25px;' src='img/dislike.svg'><figcaption>0</figcaption></figure></a></td>";
       }
       txt+= '</tr>';
 
@@ -102,6 +202,10 @@ function loadBooks(data) {
     ul.innerHTML = txt; // text html that we insert
 }
 
+function httpGetLike(id_rew){
+  var user = userId();
+
+}
 function httpGetUserName (user) {         // commetto per vedere cosa chiedo
     fetch('../api/users/' + user.toString())
     .then((resp) => resp.json())

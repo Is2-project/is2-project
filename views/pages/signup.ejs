@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
         <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
         <link rel="stylesheet" href="css/style.css">
-        
+
         <%- include('inc/libraries'); %>
 
         <script>
@@ -16,6 +16,11 @@
             if (userId()) {
                 window.location.href = "/";
             }
+            document.onkeydown = function(e){
+             if(e.keyCode == 13){
+               register($('#emailinput').val(), $('#passwordinput').val(), $('#nomeinput').val(), $('#cognomeinput').val(), $('#telefonoinput').val());
+             }
+            };
         </script>
     </head>
 
@@ -30,7 +35,7 @@
             <!-- Campi form: email, password, nome, cognome, telefono -->
 
             <form>
-            <div class="form-group">
+            <div class="form-group" id="formGroup">
                 <label for="emailinput">Indirizzo email</label>
                 <input type="email" class="form-control" id="emailinput" aria-describedby="emailHelp" placeholder="Inserisci email">
             </div>

@@ -16,6 +16,11 @@
             if (userId()) {
                 window.location.href = "/";
             }
+            document.onkeydown = function(e){
+             if(e.keyCode == 13){
+               auth($('#emailinput').val(), $('#passwordinput').val());
+             }
+            };
         </script>
     </head>
 
@@ -28,7 +33,7 @@
             <h3>Login</h3>
 
             <form>
-            <div class="form-group">
+            <div class="form-group" id="formGroup">
             <label for="emailinput">Indirizzo email</label>
             <input type="email" class="form-control" id="emailinput" aria-describedby="emailHelp" placeholder="Inserisci email">
             <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
