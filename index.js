@@ -2,7 +2,7 @@ const app = require('./lib/app.js');
 const mongoose = require('mongoose');
 
 const port = process.env.PORT || 8000;
-const mongourl = process.env.MONGOURL || require('./secrets.json').mongodb_url;
+const mongourl = require('./secrets.json').mongodb_url;
 
 app.locals.db = mongoose.connect(mongourl, {
     useNewUrlParser: true,
