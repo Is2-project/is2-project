@@ -72,7 +72,7 @@ function refreshLikes (rew_id) {
   var dislike = document.getElementById("numDislikes"+rew_id);
   fetch('../api/reviews/'+ rew_id.toString())
   .then((resp) => resp.json())
-  .then(function(data) {
+.then(function(data) {
       like.innerHTML = data.likes;
       dislike.innerHTML = data.dislikes;
       return;
@@ -192,7 +192,7 @@ function loadReviews(data) {
       txt+= '<td>'+rew.description+'</td>';
       if(rew.user == userId()) { // controllo se la recensione é stata fatta dall'utente loggato al momento
         document.getElementById("addReview").style.display = "none";
-        txt+= "<td style='border-top:none; min-width:130px;'>";
+        txt+= "<td>";
           txt+="<div style='margin-bottom:10px;'>";
             txt+="<a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'>";
               txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
@@ -216,7 +216,7 @@ function loadReviews(data) {
         txt+="</td>";
       }
       else if(userId()!== false){
-        txt+="<td style='border-top:none; min-width:130px;'>";
+        txt+="<td>";
           txt+="<figure style='margin-right:40px;'>";
             txt+="<a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
           txt+="</figure>";
@@ -227,7 +227,7 @@ function loadReviews(data) {
         checkLikeRew(rew.id);
       }
       else {
-        txt+="<td style='border-top:none; min-width:130px;'>";
+        txt+="<td>";
           txt+="<figure style='margin-right:40px;'>";
             txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
           txt+="</figure>";
@@ -240,8 +240,9 @@ function loadReviews(data) {
     }
   }
   else {
-    txt+='<tr colspan = 3>';
-    txt+= '<td>Non ci sono recensioni per questo libro!</td>';
+    txt+='<tr>';
+      txt+= '<td colpsan = "4"> Non ci sono recensioni per questo libro!</td>';
+    txt+="</tr>";
   }
   ul.innerHTML = txt;
 }
