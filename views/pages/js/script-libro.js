@@ -1,4 +1,4 @@
-function deleteRew(id) {
+function deleteRew(id) {        //delete rew by user
   fetch('../api/reviews/' + id.toString(), {
     method:'DELETE',
     headers: {
@@ -30,7 +30,7 @@ function deleteRew(id) {
   })
   .catch( error => console.error(error) );
 }
-function checkLikeRew(id_rew) {
+function checkLikeRew(id_rew) {   //check if the user that is logged, has given the like on the REVIEW
   //CHECK IF LIKE IS TRUE
   fetch('../api/reviews/'+ id_rew.toString()+'/like', {
     method:'GET',
@@ -67,7 +67,8 @@ function checkLikeRew(id_rew) {
   })
   .catch( error => console.error(error) );
 }
-function refreshLikes (rew_id) {
+
+function refreshLikes (rew_id) {        //every time that the user do something on the like's section, the page refresh the number of them
   var like = document.getElementById("numLikes"+rew_id);
   var dislike = document.getElementById("numDislikes"+rew_id);
   fetch('../api/reviews/'+ rew_id.toString())
@@ -80,7 +81,7 @@ function refreshLikes (rew_id) {
   .catch( error => console.error(error) );
 }
 
-function setLike(text,id_rew) {
+function setLike(text,id_rew) {     //this function set the visual effect and exec the POST or DELETE when the user click like or dislike, text is "like" or "dislike"
   if(userId() !== false) {
     var elem = document.getElementById(text+id_rew);
     if(text === "like")
@@ -135,8 +136,6 @@ function setLike(text,id_rew) {
           alert("Recensione non trovata!");
         }
         else if(resp.status == 500){
-          //document.getElementById("like"+id_rew).classList.remove("checked");
-          //document.getElementById("dislike"+id_rew).classList.remove("checked");
           alert("Database error!");
         }
           return;
@@ -151,7 +150,7 @@ function setLike(text,id_rew) {
   }
 }
 
-function loadUser(data) {         //load name user on the reviews
+function loadUser(data) {         //load name and the level of the user on the reviews
   var nickName = '';
   if(data!==undefined) {
     nickName=data.name+' '+data.surname;
@@ -180,31 +179,19 @@ function loadUser(data) {         //load name user on the reviews
             nickName+="'Error'";
           break;
         }
-        nickName+="><img src=\'img/"+data.level+".svg\' style='width:15px; margin-left:10px;'>";
+        nickName+="><img src=\'img/"+data.level+".svg\' style='width:18px; margin-left:10px;'>";
       nickName+="</a>";
     nickName+="</div>";
 
     var ul = document.getElementById('td'+data.id); //get the reviews that an user has written
-    ul.innerHTML = nickName;                  //set the name
+    ul.innerHTML = nickName;                  //set the name and title
   }
   else {
     nickName='ERROR';
   }
 }
 
-/*var parent = document.getElementById('parent');
-var popup = document.getElementById('popup');
-parent.onmouseover = function() {
-  if
-  popup.style.display = 'block';
-
-
-}
-parent.onmouseout = function() {
-  popup.style.display = 'none';
-}*/
-
-function createStars(rating) {
+function createStars(rating) {    //create the stars of the reviews
   var txt = "";
   for(var i=1;i<=5;i++) { //stampo le stelline
     txt+= '<span class="star ';
@@ -217,7 +204,8 @@ function createStars(rating) {
   }
   return txt;
 }
-function loadReviews(data) {
+
+function loadReviews(data) {      //load on the page the reviews
   var flag= false;
   var loc = location.hostname;
   const ul = document.getElementById('tbody');      //set up the page with the reviews
@@ -225,7 +213,6 @@ function loadReviews(data) {
   if(data[0] !== undefined) {
     for(let rew of data) {
       txt+= '<tr>';
-      //txt+= '<td name= td'+rew.user+'>'+rew.user+'</td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
         txt+= '<td id= td'+rew.user+'></td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
       txt+= '<td>';
       txt+= createStars(rew.rating);
@@ -256,7 +243,7 @@ function loadReviews(data) {
           txt+="</figure>";
         txt+="</td>";
       }
-      else if(userId()!== false){
+      else if(userId()!== false){   //if the review is not written by user logged
         txt+="<td>";
           txt+="<figure style='margin-right:40px;'>";
             txt+="<a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
@@ -267,7 +254,7 @@ function loadReviews(data) {
         txt+="</td>";
         checkLikeRew(rew.id);
       }
-      else {
+      else {  //user is not logged then he cant set like or dislike
         txt+="<td>";
           txt+="<figure style='margin-right:40px;'>";
             txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
@@ -288,24 +275,20 @@ function loadReviews(data) {
   ul.innerHTML = txt;
 }
 
-function loadBooks(data) {
+function loadBooks(data) {    //load the book on the page
     const ul = document.getElementById('book');
     var txt = '';
     txt+= '<h1>'+data.title+'</h1>'; document.title = "BooksReviews "+data.title; //titol of the page
-    txt+= '<h6> Author: '+data.author+'</h6>';
-    txt+= '<h6> Genre: '+data.genre+'</h6>';
-    txt+= '<h6> Year: '+data.year+'</h6>';
-    txt+= '<h6> Rating: ';
+    txt+= '<h6> Autore: '+data.author+'</h6>';
+    txt+= '<h6> Genere: '+data.genre+'</h6>';
+    txt+= '<h6> Anno Pubblicazione: '+data.year+'</h6>';
+    txt+= '<h6> Voto: ';
     txt+= createStars(data.rating);
     txt+='</h6>';
     txt+= '<h6> Isbn: '+data.isbn+'</h6>';
     ul.innerHTML = txt; // text html that we insert
 }
 
-function httpGetLike(id_rew){
-  var user = userId();
-
-}
 function httpGetUserName (user) {         // commetto per vedere cosa chiedo
     fetch('../api/users/' + user.toString())
     .then((resp) => resp.json())
@@ -347,7 +330,6 @@ function buildPage () { // fun that biuld page
     document.getElementById("addReview").href = "aggiungiRecensione?isbn="+isbn;
     document.getElementById("addReview").style.display= "inline-block";
   }
-
-
 }
-buildPage();
+
+buildPage();  //build the page at the start

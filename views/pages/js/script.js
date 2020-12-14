@@ -34,23 +34,23 @@ window.onclick = function(event) {
   }
 }
 
-document.getElementById('searchBarAuthor').onkeydown = function(e){
+document.getElementById('searchBarAuthor').onkeydown = function(e){   //function to submit with the "ENTER"
    if(e.keyCode == 13){
      filterBooks('author','');
    }
 };
-document.getElementById('fromYear').onkeydown = function(e){
+document.getElementById('fromYear').onkeydown = function(e){  //function to submit with the "ENTER"
    if(e.keyCode == 13){
      filterBooksForYears();
    }
 };
-document.getElementById('toYear').onkeydown = function(e){
+document.getElementById('toYear').onkeydown = function(e){  //function to submit with the "ENTER"
    if(e.keyCode == 13){
      filterBooksForYears();
    }
 };
-function isIncluded(type, val) {
 
+function isIncluded(type, val) {            //check if val is included on the filter
   for(var j = 0; j<filter.length; j++) {
     if(filter[j].includes(type)) {
       filter[j] = type+'='+val;
@@ -60,8 +60,7 @@ function isIncluded(type, val) {
   return false;
 }
 
-function isIncludedForYear(from, to) {
-
+function isIncludedForYear(from, to) {    //check if year is included on the filter
   for(var j = 0; j<filter.length; j++) {
     if(filter[j].includes('from_year')) {
       filter[j] = 'from_year='+from+'&to_year='+to;
@@ -71,7 +70,7 @@ function isIncludedForYear(from, to) {
   return false;
 }
 
-function selectBadge(type,val) {
+function selectBadge(type,val) {                      //function that show the badge filter
   if(type == "title") {
     val = document.getElementById("searchBar").value;
     var badge = document.getElementById("badge-"+type);
@@ -130,9 +129,9 @@ function badgeShow (type,val) {
   }
 }
 
-function httpGetBooks (text) {
+function httpGetBooks (text) {      //GET for books
   if(text == "") {
-    fetch('../api/books')
+    fetch('../api/books')          //GET for all books on the DB
     .then((resp) => resp.json())
     .then(function(data) {
         loadBooks(data);
@@ -141,7 +140,7 @@ function httpGetBooks (text) {
     .catch( error => console.error(error) );
   }
   else {
-    fetch('../api/books' + text.toString())
+    fetch('../api/books' + text.toString())  //GET for books filtered, text are the filters
     .then((resp) => resp.json())
     .then(function(data) {
         loadBooks(data);
@@ -150,7 +149,8 @@ function httpGetBooks (text) {
     .catch( error => console.error(error) );
   }
 }
-function filterBooks(type,val) {
+
+function filterBooks(type,val) {                    //function that manage the system of the filters
       if(type === undefined && val === undefined) {
         httpGetBooks("");
       }
@@ -158,7 +158,7 @@ function filterBooks(type,val) {
         badgeShow(type,val);
         if(type=="title")                            //special case when we filter with search bar, we need to update the value bc is not static;
           val = document.getElementById("searchBar").value;
-        else if(type == "author")
+        else if(type == "author")                     //special case when we filter with search bar, we need to update the value bc is not static;
           val = document.getElementById("searchBarAuthor").value;
         var txt = type+'='+val;
         if(filter.length == 1)
@@ -220,7 +220,7 @@ function createStars(rating) {
   return txt;
 }
 
-function loadBooks(data) {
+function loadBooks(data) {                      //load books on the page
     const ul = document.getElementById('tbody');
     var txt = '';
     for(let lib of data) {
@@ -242,7 +242,8 @@ function loadBooks(data) {
     ul.innerHTML = txt; // text html that we insert
 }
 
-function removeFilter(type) {
+
+function removeFilter(type) {                         //remove badge of filters
   var badge = document.getElementById("badge-"+type);
   var txt = '';
   badge.classList.remove("showBadge");
@@ -262,6 +263,7 @@ function removeFilter(type) {
   }
   httpGetBooks(txt);
 }
+
 filterBooks(undefined,undefined); // first call gives all books
-if(!userId())
+if(!userId()) //check if the user is logged, if dont the page hides the button "add book"
   document.getElementById("addBook").style.display= "none";

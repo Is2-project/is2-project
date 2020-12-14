@@ -1,10 +1,15 @@
 .container {
   max-width: 1350px;
 }
+.tit {
+  color:#31eabb;
+}
 .myCell{
     min-width: 150px;
 }
-
+.table td, .table th {
+  vertical-align: middle;
+}
 .center {
     width: fit-content;
     float: none;

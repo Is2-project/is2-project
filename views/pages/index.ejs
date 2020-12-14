@@ -65,25 +65,24 @@
             </div>
 
             <br><br>
+            <div style="width:100%; height:45px; float:right;">
+              <a class="badge badge-pill badge-danger" id="badge-title">
+                  <span id="badgeText-title"></span> <i onclick="removeFilter('title')" class="fas fa-times-circle"></i></a>
 
-            <a class="badge badge-pill badge-danger" id="badge-title">
-                <span id="badgeText-title"></span> <i onclick="removeFilter('title')" class="fas fa-times-circle"></i></a>
+              <a class="badge badge-pill badge-danger" id="badge-genre">
+                  <span id="badgeText-genre"></span> <i onclick="removeFilter('genre')" class="fas fa-times-circle"></i></a>
 
-            <a class="badge badge-pill badge-danger" id="badge-genre">
-                <span id="badgeText-genre"></span> <i onclick="removeFilter('genre')" class="fas fa-times-circle"></i></a>
+              <a class="badge badge-pill badge-danger" id="badge-author">
+                  <span id="badgeText-author"></span> <i onclick="removeFilter('author')" class="fas fa-times-circle"></i></a>
 
-            <a class="badge badge-pill badge-danger" id="badge-author">
-                <span id="badgeText-author"></span> <i onclick="removeFilter('author')" class="fas fa-times-circle"></i></a>
+              <a class="badge badge-pill badge-danger" id="badge-from_year">
+                  <span id="badgeText-from_year"></span> <i onclick="removeFilter('from_year')" class="fas fa-times-circle"></i></a>
 
-            <a class="badge badge-pill badge-danger" id="badge-from_year">
-                <span id="badgeText-from_year"></span> <i onclick="removeFilter('from_year')" class="fas fa-times-circle"></i></a>
+              <a class="badge badge-pill badge-danger" id="badge-from_rating">
+                  <span id="badgeText-from_rating"></span> <i onclick="removeFilter('from_rating')" class="fas fa-times-circle"></i></a>
 
-            <a class="badge badge-pill badge-danger" id="badge-from_rating">
-                <span id="badgeText-from_rating"></span> <i onclick="removeFilter('from_rating')" class="fas fa-times-circle"></i></a>
-
-
-            <br><br>
-
+              <a id="addBook" href="aggiungiLibro" class="btn btn-success" style="float: right;">Aggiungi libro</a>
+          </div>
             <div class="row">
                 <div class="col-sm-12">
 
@@ -91,31 +90,17 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th class="myCell"><button class="btn btn-link">ISBN</button> <i id="span0"></i></th>
-                                    <th class="myCell"><button class="btn btn-link">Titolo</button> <i id="span1"></i></th>
-                                    <th class="myCell"><button class="btn btn-link">Autore</button> <i id="span2"></i></th>
-                                    <th class="myCell"><button class="btn btn-link">Genere</button> <i id="span3"></i></th>
-                                    <th class="myCell"><button class="btn btn-link">Anno</button> <i id="span4"></i></th>
-                                    <th class="myCell"><button class="btn btn-link">Rating</button> <i id="span5"></i></th>
+                                    <th class="myCell tit">ISBN</th>
+                                    <th class="myCell tit">Titolo</th>
+                                    <th class="myCell tit">Autore</th>
+                                    <th class="myCell tit">Genere</th>
+                                    <th class="myCell tit">Anno</th>
+                                    <th class="myCell tit">Rating</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
                             </tbody>
                         </table>
-                    </div>
-
-                    <div class="text-center">
-
-                        <div class="center fixed-bottom">
-                            <ul class="pagination pagination-lg" id="pagination" hidden>
-
-                            </ul>
-                        </div>
-
-                        <br>
-
-                        <a id="addBook" href="aggiungiLibro" class="btn btn-success center">Aggiungi libro</a>
-
                     </div>
 
                     <br><br><br><br><br>
