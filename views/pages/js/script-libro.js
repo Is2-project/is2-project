@@ -30,7 +30,55 @@ function deleteRew(id) {
   })
   .catch( error => console.error(error) );
 }
+function checkLikeRew(id_rew) {
+  //CHECK IF LIKE IS TRUE
+  fetch('../api/reviews/'+ id_rew.toString()+'/like', {
+    method:'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    }
+  })
+  .then((resp) => resp.json())
+  .then(function(data) {
+    var like = document.getElementById("like"+id_rew);
+    if(data.like === true)
+      if(!like.classList.contains("checked"))
+        like.classList.toggle("checked");
+    return;
+  })
+  .catch( error => console.error(error) );
 
+  //CHECK IF DISLIKE IS TRUE
+  fetch('../api/reviews/'+ id_rew.toString()+'/dislike', {
+    method:'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + getToken()
+    }
+  })
+  .then((resp) => resp.json())
+  .then(function(data) {
+    var dislike = document.getElementById("dislike"+id_rew);
+    if(data.dislike === true)
+      if(!dislike.classList.contains("checked"))
+        dislike.classList.toggle("checked");
+    return;
+  })
+  .catch( error => console.error(error) );
+}
+function refreshLikes (rew_id) {
+  var like = document.getElementById("numLikes"+rew_id);
+  var dislike = document.getElementById("numDislikes"+rew_id);
+  fetch('../api/reviews/'+ rew_id.toString())
+  .then((resp) => resp.json())
+.then(function(data) {
+      like.innerHTML = data.likes;
+      dislike.innerHTML = data.dislikes;
+      return;
+  })
+  .catch( error => console.error(error) );
+}
 
 function setLike(text,id_rew) {
   if(userId() !== false) {
@@ -41,7 +89,7 @@ function setLike(text,id_rew) {
       document.getElementById("like"+id_rew).classList.remove("checked");
 
     if(elem.classList.contains("checked")) {
-      /*fetch('../api/reviews/'+id_rew.toString()+'/'+text , {
+      fetch('../api/reviews/'+id_rew.toString()+'/'+text , {
         method:'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -50,73 +98,52 @@ function setLike(text,id_rew) {
       })
       .then(resp => {
         if(resp.status == 200) {
-          //pass
+          refreshLikes(id_rew);
         }
         else if(resp.status == 400){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          alert("Non puoi votare la tua recensione!");
         }
         else if(resp.status == 401){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          alert("Devi essere loggato per poter votare!");
         }
         else if(resp.status == 404){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          alert("Recensione non trovata!");
         }
         else if(resp.status == 500){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          alert("Database error!");
         }
           return;
       })
       .catch( error => console.error(error) );
-      }*/
-
     }
     else {
-      /*fetch('../api/reviews/'+id_rew.toString()+'/'+text , {
+      fetch('../api/reviews/'+id_rew.toString()+'/'+text , {
         method:'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer ' + getToken()
-        },
-        body: JSON.stringify(),
+        }
       })
       .then(resp => {
         if(resp.status == 200) {
-          //pass
-        }
-        else if(resp.status == 400){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          refreshLikes(id_rew);
         }
         else if(resp.status == 401){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          alert("Devi essere loggato per poter votare!");
         }
         else if(resp.status == 404){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          alert("Recensione non trovata!");
         }
         else if(resp.status == 500){
-          document.getElementById("like"+id_rew).classList.remove("checked");
-          document.getElementById("dislike"+id_rew).classList.remove("checked");
-          alert("Error!");
+          //document.getElementById("like"+id_rew).classList.remove("checked");
+          //document.getElementById("dislike"+id_rew).classList.remove("checked");
+          alert("Database error!");
         }
           return;
       })
       .catch( error => console.error(error) );
-      }*/
     }
-    document.getElementById(text+id_rew).classList.toggle("checked");
+    elem.classList.toggle("checked");
   }
   else {
     alert("Devi essere loggato!");
@@ -164,26 +191,58 @@ function loadReviews(data) {
       txt+='</td>';
       txt+= '<td>'+rew.description+'</td>';
       if(rew.user == userId()) { // controllo se la recensione é stata fatta dall'utente loggato al momento
-        //document.getElementById("opt").style.removeProperty("display");
         document.getElementById("addReview").style.display = "none";
-        txt+= "<td style='border-top:none; min-width:130px;'> <a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'> <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/matita.svg'></strong></span></a>";
-        txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\" > <span class='glyphicon glyphicon-remove' aria-hidden='true'></span><span><strong><img style='width:20px' src='img/delete.svg'></strong></span></a></td>";
+        txt+= "<td>";
+          txt+="<div style='margin-bottom:10px;'>";
+            txt+="<a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'>";
+              txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
+              txt+="<span><strong>";
+                txt+="<img style='width:20px' src='img/matita.svg'>";
+              txt+="</strong></span>";
+            txt+="</a>";
+            txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\">";
+              txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
+              txt+="<span><strong>";
+                txt+="<img style='width:20px' src='img/delete.svg'>";
+              txt+="</strong></span>";
+            txt+="</a>";
+          txt+="</div>";
+          txt+="<figure style='margin-right:40px;'>";
+            txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
+          txt+="</figure>";
+          txt+="<figure>";
+            txt+="<a><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
+          txt+="</figure>";
+        txt+="</td>";
       }
       else if(userId()!== false){
-        txt+="<td style='border-top:none; min-width:130px;'><figure style='margin-right:40px;'><a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption>0</figcaption></figure></a>";
-        txt+="<figure><a onclick=\"setLike(\'dislike\',\'"+rew.id+"\')\"; id='dislike"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/dislike.svg'><figcaption>0</figcaption></figure></a></td>";
+        txt+="<td>";
+          txt+="<figure style='margin-right:40px;'>";
+            txt+="<a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
+          txt+="</figure>";
+          txt+="<figure>";
+            txt+="<a onclick=\"setLike(\'dislike\',\'"+rew.id+"\')\"; id='dislike"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
+          txt+="</figure>";
+        txt+="</td>";
+        checkLikeRew(rew.id);
       }
       else {
-        txt+="<td style='border-top:none; min-width:130px;'><figure style='margin-right:40px;'><a><img style='width: 25px;' src='img/like.svg'><figcaption>0</figcaption></figure></a>";
-        txt+="<figure><a><img style='width: 25px;' src='img/dislike.svg'><figcaption>0</figcaption></figure></a></td>";
+        txt+="<td>";
+          txt+="<figure style='margin-right:40px;'>";
+            txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
+          txt+="</figure>";
+          txt+="<figure>";
+            txt+="<a><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
+          txt+="</figure>";
+        txt+="</td>";
       }
       txt+= '</tr>';
-
     }
   }
   else {
-    txt+='<tr colspan = 3>';
-    txt+= '<td>Non ci sono recensioni per questo libro!</td>';
+    txt+='<tr>';
+      txt+= '<td colpsan = "4"> Non ci sono recensioni per questo libro!</td>';
+    txt+="</tr>";
   }
   ul.innerHTML = txt;
 }
