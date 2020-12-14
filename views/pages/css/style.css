@@ -15,6 +15,9 @@
 .paginationIcon {
     line-height: 1.5;
 }
+.click {
+  cursor:pointer;
+}
 .ask {
   margin : left;
   width: 90%;

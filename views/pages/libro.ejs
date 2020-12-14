@@ -34,6 +34,26 @@
         a {
           color:white;
         }
+        .popup:after{
+           background:rgba(0,0,0,0.7);
+           color:#fff;
+           content:attr(rel);
+           display:block;
+           margin-top:-53px;
+           position:absolute;
+           padding-top:3px;
+           padding-bottom:5px;
+           padding-left:10px;
+           padding-right:10px;
+           border-radius: 10px;
+           white-space:nowrap;
+           opacity:0;
+           -webkit-transition:opacity 1s ease 300ms;
+        }
+        .popup:hover:after{
+           opacity:1;
+           -webkit-transition:opacity 1s ease 300ms;
+        }
         a.classLike:hover *{
           opacity: 1;
           cursor:pointer;

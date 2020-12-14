@@ -155,15 +155,55 @@ function loadUser(data) {         //load name user on the reviews
   var nickName = '';
   if(data!==undefined) {
     nickName=data.name+' '+data.surname;
-    var ul = document.getElementsByName('td'+data.id);      //get the reviews that an user has written
-    for (var i = 0; i < ul.length; i++) {
-        ul[i].innerHTML = nickName;                 //set the name
-    }
+    nickName+="<div style='width:20%; display:inline-block;'>";
+      nickName+= "<a class='popup' rel=";
+        switch(data.level) {
+          case 0:
+            nickName+="'Newbie'";
+          break;
+          case 1:
+            nickName+="'Beginner'";
+          break;
+          case 2:
+            nickName+="'Reviewer'";
+          break;
+          case 3:
+            nickName+="'Expert'";
+          break;
+          case 4:
+            nickName+="'Master'";
+          break;
+          case 5:
+            nickName+="'Piero Angela'";
+          break;
+          default:
+            nickName+="'Error'";
+          break;
+        }
+        nickName+="><img src=\'img/"+data.level+".svg\' style='width:15px; margin-left:10px;'>";
+      nickName+="</a>";
+    nickName+="</div>";
+
+    var ul = document.getElementById('td'+data.id); //get the reviews that an user has written
+    ul.innerHTML = nickName;                  //set the name
   }
   else {
     nickName='ERROR';
   }
 }
+
+/*var parent = document.getElementById('parent');
+var popup = document.getElementById('popup');
+parent.onmouseover = function() {
+  if
+  popup.style.display = 'block';
+
+
+}
+parent.onmouseout = function() {
+  popup.style.display = 'none';
+}*/
+
 function createStars(rating) {
   var txt = "";
   for(var i=1;i<=5;i++) { //stampo le stelline
@@ -185,7 +225,8 @@ function loadReviews(data) {
   if(data[0] !== undefined) {
     for(let rew of data) {
       txt+= '<tr>';
-      txt+= '<td name= td'+rew.user+'>'+rew.user+'</td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
+      //txt+= '<td name= td'+rew.user+'>'+rew.user+'</td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
+        txt+= '<td id= td'+rew.user+'></td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
       txt+= '<td>';
       txt+= createStars(rew.rating);
       txt+='</td>';
