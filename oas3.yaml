@@ -281,6 +281,9 @@ paths:
                   phone:
                     type: string
                     description: "User's phone number"
+                  level:
+                    type: integer
+                    description: "User's level, from 0 to 5"
         '404':
           $ref: '#/components/responses/error-404'
         '500':
