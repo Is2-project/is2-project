@@ -16,7 +16,7 @@ function auth(email, password) {
         Cookies.set('token', data.token);
         window.location.href = document.referrer ?? '/';    
     }).fail((res) => {
-        alert('Errore: ' + JSON.parse(response.responseText).error);
+        alert('Errore: ' + JSON.parse(res.responseText).error);
     });
 }
 
@@ -31,7 +31,7 @@ function register(email, password, nome, cognome, telefono) {
     }, (data) => {
         window.location.href = "/signin"; //Registration successful, redirect to login page
     }).fail((res) => {
-        alert('Errore: ' + JSON.parse(response.responseText).error);
+        alert('Errore: ' + JSON.parse(res.responseText).error);
     });
 }
 
