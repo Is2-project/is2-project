@@ -210,58 +210,77 @@ function loadReviews(data) {      //load on the page the reviews
   var txt = '';
   if(data[0] !== undefined) {
     for(let rew of data) {
+      if(rew.date!==undefined){
+        var date = rew.date;
+        console.log("DATE: "+ date +"REW DATE: "+ rew.date);
+        date = date.replace("T"," ");
+        date = date.substring(0,date.length-5);
+      }
+       
       txt+= '<tr>';
-        txt+= '<td id= td'+rew.user+'></td>'; httpGetUserName(rew.user);        // now we stamp the id of user we have a p[roblem to syncronize the fun that take the name of user
-      txt+= '<td>';
-      txt+= createStars(rew.rating);
-      txt+='</td>';
-      txt+= '<td>'+rew.description+'</td>';
-      if(rew.user == userId()) { // controllo se la recensione é stata fatta dall'utente loggato al momento
-        document.getElementById("addReview").style.display = "none";
+
+        txt+= '<td id= td'+rew.user+'></td>'; 
+        
+        httpGetUserName(rew.user);  
+          
+        txt+= '<td>';
+          txt+= createStars(rew.rating);
+        txt+='</td>';
+
+        
         txt+= "<td>";
-          txt+="<div style='margin-bottom:10px;'>";
-            txt+="<a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'>";
-              txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
-              txt+="<span><strong>";
-                txt+="<img style='width:20px' src='img/matita.svg'>";
-              txt+="</strong></span>";
-            txt+="</a>";
-            txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\">";
-              txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
-              txt+="<span><strong>";
-                txt+="<img style='width:20px' src='img/delete.svg'>";
-              txt+="</strong></span>";
-            txt+="</a>";
-          txt+="</div>";
-          txt+="<figure style='margin-right:40px;'>";
-            txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
-          txt+="</figure>";
-          txt+="<figure>";
-            txt+="<a><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
-          txt+="</figure>";
-        txt+="</td>";
-      }
-      else if(userId()!== false){   //if the review is not written by user logged
-        txt+="<td>";
-          txt+="<figure style='margin-right:40px;'>";
-            txt+="<a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
-          txt+="</figure>";
-          txt+="<figure>";
-            txt+="<a onclick=\"setLike(\'dislike\',\'"+rew.id+"\')\"; id='dislike"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
-          txt+="</figure>";
-        txt+="</td>";
-        checkLikeRew(rew.id);
-      }
-      else {  //user is not logged then he cant set like or dislike
-        txt+="<td>";
-          txt+="<figure style='margin-right:40px;'>";
-            txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
-          txt+="</figure>";
-          txt+="<figure>";
-            txt+="<a><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
-          txt+="</figure>";
-        txt+="</td>";
-      }
+          if(rew.date!==undefined){
+            txt+= "<a  class='popup datetime' rel='"+date+"';> <img src='img/datetime.svg' style='width:18px;'> </a>";
+          }    
+          txt+= "<p>"+rew.description+"</p>";    
+        txt+='</td>';
+
+        if(rew.user == userId()) { // controllo se la recensione é stata fatta dall'utente loggato al momento
+          document.getElementById("addReview").style.display = "none";
+          txt+= "<td>";
+            txt+="<div style='margin-bottom:10px;'>";
+              txt+="<a href='aggiungiRecensione?isbn="+rew.book+"&id="+rew.id+"&action=true' style='background-color: rgb(32,178,170); 'class='btn btn-primary a-btn-slide-text'>";
+                txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
+                txt+="<span><strong>";
+                  txt+="<img style='width:20px' src='img/matita.svg'>";
+                txt+="</strong></span>";
+              txt+="</a>";
+              txt+= "<a style='background-color: rgb(200,0,0); margin-left:7px; 'class='btn btn-primary a-btn-slide-text' onclick=\"deleteRew(\'"+rew.id+"\')\">";
+                txt+="<span class='glyphicon glyphicon-remove' aria-hidden='true'></span>";
+                txt+="<span><strong>";
+                  txt+="<img style='width:20px' src='img/delete.svg'>";
+                txt+="</strong></span>";
+              txt+="</a>";
+            txt+="</div>";
+            txt+="<figure style='margin-right:40px;'>";
+              txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
+            txt+="</figure>";
+            txt+="<figure>";
+              txt+="<a><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
+            txt+="</figure>";
+          txt+="</td>";
+        }
+        else if(userId()!== false){   //if the review is not written by user logged
+          txt+="<td>";
+            txt+="<figure style='margin-right:40px;'>";
+              txt+="<a onclick=\"setLike(\'like\',\'"+rew.id+"\')\"; id='like"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
+            txt+="</figure>";
+            txt+="<figure>";
+              txt+="<a onclick=\"setLike(\'dislike\',\'"+rew.id+"\')\"; id='dislike"+rew.id+"' class='classLike'><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
+            txt+="</figure>";
+          txt+="</td>";
+          checkLikeRew(rew.id);
+        }
+        else {  //user is not logged then he cant set like or dislike
+          txt+="<td>";
+            txt+="<figure style='margin-right:40px;'>";
+              txt+="<a><img style='width: 25px;' src='img/like.svg'><figcaption id='numLikes"+rew.id+"'>"+rew.likes+"</figcaption></a>";
+            txt+="</figure>";
+            txt+="<figure>";
+              txt+="<a><img style='width: 25px;' src='img/dislike.svg'><figcaption id='numDislikes"+rew.id+"'>"+rew.dislikes+"</figcaption></a>";
+            txt+="</figure>";
+          txt+="</td>";
+        }
       txt+= '</tr>';
     }
   }

@@ -24,3 +24,7 @@
 .table td, .table th {
     vertical-align: middle;
 }
+.datetime{
+    position:relative; 
+    top:-5px; 
+}
