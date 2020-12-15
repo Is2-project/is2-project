@@ -94,4 +94,3 @@ function user() {
 function getToken() {
     return Cookies.get('token');
 }
-

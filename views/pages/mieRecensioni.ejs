@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>BooksReviews - Le mie recensioni</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://bootswatch.com/4/darkly/bootstrap.min.css">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/stars.css">
+    <%- include('inc/libraries'); %>
+
+    <style>
+        .container {
+            max-width: 1350px;
+        }
+        .myCell{
+            min-width: 150px;
+        }
+        .classLike *{
+          opacity: 0.5;
+        }
+        .classLike figcaption{
+          opacity: 0.8;
+        }
+        .checked *{
+          opacity: 1;
+        }
+        figure {
+          display:table;
+          float:left;
+          margin-bottom: 0px;
+        }
+        .popup:after{
+           background:rgba(0,0,0,0.7);
+           color:#fff;
+           content:attr(rel);
+           display:block;
+           margin-top:-53px;
+           position:absolute;
+           padding-top:3px;
+           padding-bottom:5px;
+           padding-left:10px;
+           padding-right:10px;
+           border-radius: 10px;
+           white-space:nowrap;
+           opacity:0;
+           -webkit-transition:opacity 1s ease 300ms;
+        }
+        .popup:hover:after{
+           opacity:1;
+           -webkit-transition:opacity 1s ease 300ms;
+        }
+    </style>
+
+</head>
+
+<body>
+  <%- include('inc/navbar'); %>
+
+  <div class="container">
+    <br><br><br><br><br>
+    <h1>Le Mie Recensioni</h1>
+    <br><br>
+      <div class="row">
+          <div class="col-sm-12" id="book">
+              <br>
+              <table class="table table-hover">
+                  <thead>
+                  <tr>
+                      <th class="myCell">Libro</th>
+                      <th class="myCell">Voto</th>
+                      <th class="myCell">Recensione</th>
+                      <th style="width:13%"class="myCell"></th>
+                  </tr>
+                  </thead>
+                  <tbody id="tbody">
+                 </tbody>
+              </table>
+
+              <br><br>
+              <br><br><br><br><br>
+
+          </div>
+      </div>
+
+  </div>
+<script src="js/script-mieRecensioni.js"></script>
+</body>
+
+</html>

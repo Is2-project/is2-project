@@ -1,7 +1,7 @@
 {
   "name": "is2-project",
   "version": "1.0.0",
-  "description": "",
+  "description": "Progetto del corso di Ingegneria del Software 2 del corso di laurea in Informatica dell'università degli studi di Trento.",
   "main": "index.js",
   "directories": {
     "lib": "lib"

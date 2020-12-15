@@ -21,3 +21,6 @@
     width: 10px;
     overflow: hidden;
 }
+.table td, .table th {
+    vertical-align: middle;
+}

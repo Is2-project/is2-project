@@ -206,8 +206,6 @@ function createStars(rating) {    //create the stars of the reviews
 }
 
 function loadReviews(data) {      //load on the page the reviews
-  var flag= false;
-  var loc = location.hostname;
   const ul = document.getElementById('tbody');      //set up the page with the reviews
   var txt = '';
   if(data[0] !== undefined) {
@@ -318,7 +316,7 @@ function httpGetReviews (isbn) {  // get the reviews of the book and build the t
     .catch( error => console.error(error) );
 }
 
-function buildPage () { // fun that biuld page
+function buildPage () { // fun that build page
   const queryString = window.location.search;     //take isbn from url
   const urlParams = new URLSearchParams(queryString);
   const isbn = urlParams.get('isbn');
