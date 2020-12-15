@@ -137,7 +137,12 @@ function deleteRew(id) {        //delete rew by user
   
   function buildPage () { // fun that build page
     const id = userId();
-    httpGetReviews(id);
+    if(id==false){
+      window.location.href = "/signin";
+    }
+    else{
+      httpGetReviews(id);
+    }
   }
   
   buildPage();  //build the page at the start
